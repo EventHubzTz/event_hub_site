@@ -20,6 +20,7 @@ export const paymentFormFields = [
 ]
 
 export const donateFormFields = [
+    { name: "ticket_owner", type: "text", label: "Full Name", notRequired: false, minimumCharacters: 3 },
     { name: "amount", type: "text", label: "Amount", notRequired: false, minimumCharacters: 3 },
     { name: "phone_number", type: "text", label: "Phone Number (07xxxxxxxx)", notRequired: false, minimumCharacters: 10 },
 ]

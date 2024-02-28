@@ -235,7 +235,7 @@ export const FormDialog = ({
                                     </React.Fragment>
                                 )
                             })}
-                            {activeStep === 3 &&
+                            {activeStep === 2 &&
                                 <Typography variant='h6'>
                                     Complete Payment
                                 </Typography>
