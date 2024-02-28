@@ -20,6 +20,7 @@ function HomePage() {
             t_shirt_size: "",
             amount: 30000,
             phone_number: "",
+            location: "",
             otp: "",
             event_id: 1,
             event_package_id: 1,
@@ -29,6 +30,7 @@ function HomePage() {
         {
             amount: 1000,
             phone_number: "",
+            location: "",
             otp: "",
             event_id: 1,
             event_package_id: 1,
