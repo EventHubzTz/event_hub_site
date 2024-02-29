@@ -20,3 +20,20 @@ export function formatMoney(amount, currency = 'TZS') {
 export function removeUnderscore(word) {
     return word.replace(/_/g, ' ');
 }
+export const formatDate = (dateString) => {
+    const options = {
+        // weekday: 'long',
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true,
+    };
+
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString('en-GB', options);
+
+    return formattedDate;
+};

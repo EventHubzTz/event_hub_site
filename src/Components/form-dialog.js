@@ -267,12 +267,25 @@ export const FormDialog = ({
                         </DialogContent>
                         {activeStep < 3 &&
                             <DialogActions>
+                                {activeStep === 2 &&
+                                    <Button
+                                        variant='contained'
+                                        sx={{
+                                            mr: "auto"
+                                        }}
+                                    >
+                                        Omba Tena OTP
+                                    </Button>
+                                }
                                 <Button
+                                    variant='contained'
+                                    color='inherit'
                                     onClick={handleClose}
                                 >
                                     Ghairi
                                 </Button>
                                 <Button
+                                    variant='contained'
                                     type="submit"
                                     disabled={isSubmitting}
                                 >

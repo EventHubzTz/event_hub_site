@@ -8,10 +8,12 @@ import { FormDialog } from '../../Components/form-dialog'
 import { CREATE } from '../../Utils/constant'
 import { donateFormFields, paymentFormFields } from '../../seed/form-fields'
 import { makePaymentUrl, requestOTPUrl, verifyOTPUrl } from '../../seed/url'
+import ViewTicket from '../../Components/ViewTicket'
 
 function HomePage() {
     const [openBuyTicketDialog, setOpenBuyTicketDialog] = React.useState(false);
     const [openDonateDialog, setOpenDonateDialog] = React.useState(false);
+    const [openViewTicketDialog, setOpenViewTicketDialog] = React.useState(false);
     const [paymentFields, setPaymentFields] = React.useState(paymentFormFields);
     const [donateFields, setDonateFields] = React.useState(donateFormFields);
     const payTicketValues = [
@@ -28,6 +30,7 @@ function HomePage() {
     ];
     const donateValues = [
         {
+            ticket_owner: "",
             amount: 1000,
             phone_number: "",
             location: "",
@@ -42,6 +45,8 @@ function HomePage() {
     };
 
     const handleCloseBuyTicketDialog = () => {
+        setPaymentFields(paymentFormFields);
+        setDonateFields(donateFormFields);
         setOpenBuyTicketDialog(false);
     };
 
@@ -50,7 +55,17 @@ function HomePage() {
     };
 
     const handleCloseDonateDialog = () => {
+        setPaymentFields(paymentFormFields);
+        setDonateFields(donateFormFields);
         setOpenDonateDialog(false);
+    };
+
+    const handleClickViewTicketDialog = () => {
+        setOpenViewTicketDialog(true);
+    };
+
+    const handleCloseViewTicketDialog = () => {
+        setOpenViewTicketDialog(false);
     };
 
     const firstSectionItems = [
@@ -77,13 +92,22 @@ function HomePage() {
                 text: "Nunua Tiketi",
                 variant: "contained",
                 sx: {
-                    mr: 2
+                    my: 1,
+                    mr: 2,
                 }
             },
             button2: {
                 text: "Changia",
                 variant: "contained",
-                color: "success"
+                color: "success",
+                sx: {
+                    my: 1,
+                    mr: 2
+                }
+            },
+            button3: {
+                text: "Pakua Tiketi",
+                variant: "contained",
             }
         },
         {
@@ -95,6 +119,7 @@ function HomePage() {
                 text: "Nunua Tiketi",
                 variant: "outlined",
                 sx: {
+                    my: 1,
                     mr: 2,
                     color: "white",
                     border: "1px solid white",
@@ -106,6 +131,19 @@ function HomePage() {
                 variant: "outlined",
                 color: "success",
                 sx: {
+                    my: 1,
+                    mr: 2,
+                    color: "white",
+                    border: "1px solid white",
+                    borderRadius: 16,
+                }
+            },
+            button3: {
+                text: "Pakua Tiketi",
+                variant: "outlined",
+                color: "success",
+                sx: {
+                    my: 1,
                     color: "white",
                     border: "1px solid white",
                     borderRadius: 16,
@@ -120,13 +158,22 @@ function HomePage() {
                 text: "Nunua Tiketi",
                 variant: "contained",
                 sx: {
+                    my: 1,
                     mr: 2
                 }
             },
             button2: {
                 text: "Changia",
                 variant: "contained",
-                color: "success"
+                color: "success",
+                sx: {
+                    my: 1,
+                    mr: 2
+                }
+            },
+            button3: {
+                text: "Pakua Tiketi",
+                variant: "contained",
             }
         },
         {
@@ -138,6 +185,7 @@ function HomePage() {
                 text: "Nunua Tiketi",
                 variant: "outlined",
                 sx: {
+                    my: 1,
                     mr: 2,
                     color: "white",
                     border: "1px solid white",
@@ -149,6 +197,18 @@ function HomePage() {
                 variant: "outlined",
                 color: "success",
                 sx: {
+                    my: 1,
+                    mr: 2,
+                    color: "white",
+                    border: "1px solid white",
+                    borderRadius: 16,
+                }
+            },
+            button3: {
+                text: "Pakua Tiketi",
+                variant: "outlined",
+                sx: {
+                    my: 1,
                     color: "white",
                     border: "1px solid white",
                     borderRadius: 16,
@@ -185,6 +245,12 @@ function HomePage() {
                     firstCallbackUrl={requestOTPUrl}
                     secondCallbackUrl={verifyOTPUrl}
                     thirdCallbackUrl={makePaymentUrl}
+                />
+            )}
+            {openViewTicketDialog && (
+                <ViewTicket
+                    open={openViewTicketDialog}
+                    handleClose={handleCloseViewTicketDialog}
                 />
             )}
             <TopNav />
@@ -282,7 +348,8 @@ function HomePage() {
                                     </Typography>
                                     <Box
                                         sx={{
-                                            display: "flex"
+                                            display: "flex",
+                                            flexWrap: "wrap"
                                         }}
                                     >
                                         <Button
@@ -302,6 +369,15 @@ function HomePage() {
                                             onClick={handleClickDonateDialog}
                                         >
                                             {item.button2.text}
+                                        </Button>
+                                        <Button
+                                            color={item.button3.color && item.button3.color}
+                                            size='large'
+                                            variant={item.button3.variant && item.button3.variant}
+                                            sx={item.button1.sx && item.button1.sx}
+                                            onClick={handleClickViewTicketDialog}
+                                        >
+                                            {item.button3.text}
                                         </Button>
                                     </Box>
                                 </Grid>

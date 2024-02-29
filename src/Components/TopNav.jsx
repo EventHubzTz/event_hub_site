@@ -4,18 +4,18 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export const pages = [
-    {
-        title: 'Nyumbani',
-        link: '/'
-    },
-    {
-        title: 'Kuhusu Pugu Marathon',
-        link: '/'
-    },
-    {
-        title: 'Mawasiliano',
-        link: '/'
-    }
+    // {
+    //     title: 'Nyumbani',
+    //     link: '/'
+    // },
+    // {
+    //     title: 'Kuhusu Pugu Marathon',
+    //     link: '/'
+    // },
+    // {
+    //     title: 'Mawasiliano',
+    //     link: '/'
+    // },
 ];
 
 function TopNav() {

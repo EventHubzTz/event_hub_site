@@ -8,3 +8,4 @@ export const eventHubServiceUrl = "https://www.service.eventhubtz.com"
 export const requestOTPUrl = `${eventHubServiceUrl}/api/v1/resend/otp`
 export const verifyOTPUrl = `${eventHubServiceUrl}/api/v1/verify/phone`
 export const makePaymentUrl = `${eventHubServiceUrl}/api/v1/push/ussd`
+export const getAllPaymentTransactionsUrl = `${eventHubServiceUrl}/api/v1/get/payment/transaction`
