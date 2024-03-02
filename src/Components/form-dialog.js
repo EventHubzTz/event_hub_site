@@ -1,10 +1,18 @@
 import * as React from 'react'
-import { Avatar, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, InputAdornment, MenuItem, OutlinedInput, Slide, TextField, Typography, } from '@mui/material'
+import { Avatar, Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, InputAdornment, MenuItem, OutlinedInput, Slide, TextField, Typography, } from '@mui/material'
 import { Form, Formik } from 'formik'
 import * as Yup from "yup"
 import { authPostRequest } from '../services/api-service';
 import { Attachment, Close } from '@mui/icons-material';
 import { otpFormFields } from '../seed/form-fields';
+import { MuiOtpInput } from 'mui-one-time-password-input';
+import { getTransactionByTransactionIDUrl } from '../seed/url';
+import { formatDate, formatMoney } from '../Utils/constant';
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import Lottie from 'lottie-react';
+import failedAnimation from "../animations/failed_animation.json";
+import { DatePicker } from '@mui/x-date-pickers';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />
@@ -23,6 +31,10 @@ export const FormDialog = ({
     thirdCallbackUrl,
 }) => {
     const [activeStep, setActiveStep] = React.useState(1);
+    const [hasPaid, setHasPaid] = React.useState(false);
+    const [paymentDetails, setPaymentDetails] = React.useState({});
+    const [transactionID, setTransactionID] = React.useState("");
+    const [timeCounter, setTimeCounter] = React.useState(0);
     const schema = Yup.object().shape(
         fields.reduce((obj, field) => {
             if (field.type === 'email') {
@@ -46,6 +58,58 @@ export const FormDialog = ({
         }, {})
     )
     const [serverError, setServerError] = React.useState("")
+    const printRef = React.useRef();
+
+    async function printInvoice() {
+        // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+        const element = printRef.current;
+        const canvas = await html2canvas(element);
+        const data = canvas.toDataURL("image/png");
+
+        const pdf = new jsPDF();
+        const imgProperties = pdf.getImageProperties(data);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
+
+        pdf.addImage(data, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`${paymentDetails?.ticket_owner} Ticket`);
+    }
+
+    const getPaymentDetails = React.useCallback(() => {
+        if (transactionID !== "") {
+            if (timeCounter < 60) {
+                setTimeCounter(timeCounter + 3);
+                authPostRequest(
+                    getTransactionByTransactionIDUrl,
+                    {
+                        transaction_id: transactionID
+                    },
+                    (data) => {
+                        if (data?.payment_status === "COMPLETED") {
+                            setActiveStep(4);
+                            setHasPaid(true);
+                            setTimeCounter(60);
+                            setPaymentDetails(data);
+                        }
+                    },
+                    (error) => {
+                    }
+                );
+            } else {
+                setActiveStep(4);
+                setHasPaid(false);
+            }
+        }
+    }, [transactionID, timeCounter]);
+
+    React.useEffect(() => {
+        const timeoutId = setInterval(() => {
+            getPaymentDetails();
+        }, 3000);
+
+        return () => clearInterval(timeoutId);
+    }, [getPaymentDetails]);
 
     return (
         <Dialog
@@ -89,11 +153,11 @@ export const FormDialog = ({
                                     thirdCallbackUrl,
                                     { ...body, amount: parseInt(values.amount) },
                                     (data) => {
-
+                                        setTransactionID(data?.data?.transaction_id);
                                     },
                                     (error) => {
                                         if (error?.response?.data?.message) {
-                                            setServerError(error.response.data.message[0])
+                                            setServerError(error.response.data.message)
                                         } else if (error?.response?.data) {
                                             helpers.setErrors(error?.response?.data)
                                         }
@@ -104,7 +168,7 @@ export const FormDialog = ({
                         },
                         (error) => {
                             if (error?.response?.data?.message) {
-                                setServerError(error.response.data.message[0])
+                                setServerError(error.response.data.message)
                             } else if (error?.response?.data) {
                                 helpers.setErrors(error?.response?.data)
                             }
@@ -223,21 +287,54 @@ export const FormDialog = ({
                                                             }
                                                             sx={{ mt: 2 }}
                                                         /> :
-                                                        <TextField
-                                                            id={field.name}
-                                                            multiline
-                                                            required={field?.notRequired === false}
-                                                            name={field.name}
-                                                            type={field.type}
-                                                            label={field.label}
-                                                            margin="normal"
-                                                            fullWidth
-                                                            value={values[field.name]}
-                                                            error={Boolean(errors[field.name] && touched[field.name])}
-                                                            helperText={touched[field.name] && errors[field.name]}
-                                                            onBlur={handleBlur}
-                                                            onChange={handleChange}
-                                                        />
+                                                        field.type === "otp" ?
+                                                            <MuiOtpInput
+                                                                value={values[field.name]}
+                                                                onChange={(newValue) => {
+                                                                    setFieldValue(field.name, newValue)
+                                                                }}
+                                                                length={6}
+                                                                TextFieldsProps={{ size: 'small', placeholder: '-' }}
+                                                                sx={{
+                                                                    display: "flex",
+                                                                    maxWidth: "520px",
+                                                                    marginInline: "auto",
+                                                                    gap: { xs: "6px", md: "30px" },
+                                                                    my: 1,
+                                                                }}
+                                                            /> :
+                                                            field.type === "date" ?
+                                                                <DatePicker
+                                                                    label={field.label}
+                                                                    value={values[field.name]}
+                                                                    onChange={(newValue) => {
+                                                                        setFieldValue(field.name, newValue)
+                                                                    }}
+                                                                    slotProps={{
+                                                                        textField: {
+                                                                            margin: "normal",
+                                                                            error: Boolean(errors[field.name] && touched[field.name]),
+                                                                            helperText: touched[field.name] && errors[field.name],
+                                                                            onBlur: handleBlur,
+                                                                            fullWidth: true
+                                                                        }
+                                                                    }}
+                                                                /> :
+                                                                <TextField
+                                                                    id={field.name}
+                                                                    multiline
+                                                                    required={field?.notRequired === false}
+                                                                    name={field.name}
+                                                                    type={field.type}
+                                                                    label={field.label}
+                                                                    margin="normal"
+                                                                    fullWidth
+                                                                    value={values[field.name]}
+                                                                    error={Boolean(errors[field.name] && touched[field.name])}
+                                                                    helperText={touched[field.name] && errors[field.name]}
+                                                                    onBlur={handleBlur}
+                                                                    onChange={handleChange}
+                                                                />
                                                 }
                                             </React.Fragment>
                                         )
@@ -245,7 +342,7 @@ export const FormDialog = ({
                                 </>
                             }
                             {activeStep === 2 &&
-                                <Typography>
+                                <Typography sx={{ mt: 2 }}>
                                     OTP Code zimetumwa kwenye namba {values.phone_number}
                                 </Typography>
                             }
@@ -255,6 +352,95 @@ export const FormDialog = ({
                                         Tunasubiri malipo kutoka {values.phone_number} ...
                                     </Typography>
                                 </DialogContent>
+                            }
+                            {activeStep === 4 &&
+                                <>
+                                    {hasPaid &&
+                                        <Box>
+                                            <Box>
+                                                <Button
+                                                    variant='contained'
+                                                    sx={{
+                                                        mr: 2,
+                                                        my: 2
+                                                    }}
+                                                    onClick={() => printInvoice()}
+                                                >
+                                                    Download
+                                                </Button>
+                                            </Box>
+                                            <Box
+                                                ref={printRef}
+                                                sx={{ p: { xs: 2, sm: 2, md: 5 }, maxWidth: "300px" }}
+                                                border={1}
+                                                borderColor="lightgray"
+                                            >
+                                                {/* <Watermark text="Pugu Marathon"> */}
+                                                <Box
+                                                    sx={{
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        mb: 3,
+                                                        alignContent: "end",
+                                                    }}
+                                                >
+                                                    <Avatar
+                                                        alt='logo'
+                                                        src='/assets/images/logo.png'
+                                                        sx={{
+                                                            width: 80,
+                                                            height: 80
+                                                        }}
+                                                    />
+                                                    <Typography
+                                                        variant="h6"
+                                                        sx={{
+                                                            fontStyle: "italic",
+                                                            letterSpacing: 3,
+                                                            fontWeight: 900
+                                                        }}
+                                                    >
+                                                        PUGU MARATHON
+                                                    </Typography>
+                                                </Box>
+                                                <Typography variant='body1' sx={{ my: 0.5 }}>
+                                                    <b>Jina:</b> {paymentDetails?.ticket_owner}
+                                                </Typography>
+                                                <Typography variant='body1' sx={{ my: 0.5 }}>
+                                                    <b>T Shirt:</b> {paymentDetails?.t_shirt_size}
+                                                </Typography>
+                                                <Typography variant='body1' sx={{ my: 0.5 }}>
+                                                    <b>Mahali:</b> {paymentDetails?.location}
+                                                </Typography>
+                                                <Typography variant='body1' sx={{ my: 0.5 }}>
+                                                    <b>Kiasi:</b> {formatMoney(paymentDetails?.amount)}
+                                                </Typography>
+                                                <Typography variant='body1' sx={{ my: 0.5 }}>
+                                                    <b>Tarehe:</b> {formatDate(paymentDetails?.created_at)}
+                                                </Typography>
+                                                {/* </Watermark> */}
+                                            </Box>
+                                        </Box>
+                                    }
+                                    {!hasPaid &&
+                                        <>
+                                            <Typography
+                                                color="error"
+                                                align='center'
+                                                sx={{
+                                                    mt: 2,
+                                                }}
+                                            >
+                                                Malipo Hayajakamilika
+                                            </Typography>
+                                            <Lottie
+                                                animationData={failedAnimation}
+                                                loop={true}
+                                                size={20}
+                                            />
+                                        </>
+                                    }
+                                </>
                             }
                             <Typography
                                 color="error"
@@ -271,10 +457,11 @@ export const FormDialog = ({
                                     <Button
                                         variant='contained'
                                         sx={{
-                                            mr: "auto"
+                                            mr: "auto",
+                                            fontSize: "12px"
                                         }}
                                     >
-                                        Omba Tena OTP
+                                        Omba OTP
                                     </Button>
                                 }
                                 <Button

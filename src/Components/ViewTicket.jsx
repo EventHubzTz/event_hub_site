@@ -7,6 +7,7 @@ import { getAllPaymentTransactionsUrl } from '../seed/url';
 import { formatDate, formatMoney } from '../Utils/constant';
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { Watermark } from '@hirohe/react-watermark';
 
 function ViewTicket({ open, handleClose }) {
     const [viewTicket, setViewTicket] = React.useState(false);
@@ -156,10 +157,11 @@ function ViewTicket({ open, handleClose }) {
                                 </Box>
                                 <Box
                                     ref={printRef}
-                                    sx={{ p: { xs: 2, sm: 2, md: 5 } }}
+                                    sx={{ p: { xs: 2, sm: 2, md: 5 }, maxWidth: "300px" }}
                                     border={1}
                                     borderColor="lightgray"
                                 >
+                                    {/* <Watermark text="Pugu Marathon"> */}
                                     <Box
                                         sx={{
                                             display: "flex",
@@ -187,21 +189,22 @@ function ViewTicket({ open, handleClose }) {
                                             PUGU MARATHON
                                         </Typography>
                                     </Box>
-                                    <Typography variant='h6' sx={{ my: 0.5 }}>
-                                        <b>Jina la Mwenye Tiketi:</b> {selectedData?.ticket_owner}
+                                    <Typography variant='body1' sx={{ my: 0.5 }}>
+                                        <b>Jina:</b> {selectedData?.ticket_owner}
                                     </Typography>
-                                    <Typography variant='h6' sx={{ my: 0.5 }}>
+                                    <Typography variant='body1' sx={{ my: 0.5 }}>
                                         <b>T Shirt:</b> {selectedData?.t_shirt_size}
                                     </Typography>
-                                    <Typography variant='h6' sx={{ my: 0.5 }}>
-                                        <b>Mahali Atokapo:</b> {selectedData?.location}
+                                    <Typography variant='body1' sx={{ my: 0.5 }}>
+                                        <b>Mahali:</b> {selectedData?.location}
                                     </Typography>
-                                    <Typography variant='h6' sx={{ my: 0.5 }}>
+                                    <Typography variant='body1' sx={{ my: 0.5 }}>
                                         <b>Kiasi:</b> {formatMoney(selectedData?.amount)}
                                     </Typography>
-                                    <Typography variant='h6' sx={{ my: 0.5 }}>
+                                    <Typography variant='body1' sx={{ my: 0.5 }}>
                                         <b>Tarehe:</b> {formatDate(selectedData?.created_at)}
                                     </Typography>
+                                    {/* </Watermark> */}
                                 </Box>
                             </Box>
                         }
@@ -236,41 +239,47 @@ function ViewTicket({ open, handleClose }) {
                                     <Box>
                                         {tickets.results.map((item, index) => {
                                             return (
-                                                <Box
-                                                    key={index}
-                                                    sx={{
-                                                        display: "flex",
-                                                        flexWrap: "wrap",
-                                                        justifyContent: "space-between",
-                                                        my: 4,
-                                                        p: 4
-                                                    }}
-                                                    border={1}
-                                                    borderColor="lightgray"
-                                                >
-                                                    <Typography variant='h5' sx={{ my: 1, width: { xs: "100%", sm: "100%", md: "20%" } }}>
-                                                        {item.ticket_owner}
-                                                    </Typography>
-                                                    <Typography variant='h5' sx={{ my: 1, width: { xs: "100%", sm: "100%", md: "20%" } }}>
-                                                        {item.t_shirt_size}
-                                                    </Typography>
-                                                    <Typography variant='h5' sx={{ my: 1, width: { xs: "100%", sm: "100%", md: "20%" } }}>
-                                                        {item.location}
-                                                    </Typography>
-                                                    <Typography variant='h5' sx={{ my: 1, width: { xs: "100%", sm: "100%", md: "20%" } }}>
-                                                        {formatMoney(item.amount)}
-                                                    </Typography>
-                                                    <Button
-                                                        variant='contained'
-                                                        sx={{ my: 1, width: { xs: "100%", sm: "100%", md: "20%" } }}
-                                                        onClick={() => {
-                                                            setSelectedData(item);
-                                                            setViewTicket(true);
+                                                <Watermark text="Pugu Marathon">
+                                                    <Box
+                                                        key={index}
+                                                        sx={{
+                                                            display: "flex",
+                                                            flexWrap: "wrap",
+                                                            alignItems: "center",
+                                                            justifyContent: "space-between",
+                                                            my: 4,
+                                                            p: 1
                                                         }}
+                                                        border={1}
+                                                        borderColor="lightgray"
                                                     >
-                                                        Ona Tiketi
-                                                    </Button>
-                                                </Box>
+                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "16%" } }}>
+                                                            {item.ticket_owner}
+                                                        </Typography>
+                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "16%" } }}>
+                                                            {item.t_shirt_size}
+                                                        </Typography>
+                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "16%" } }}>
+                                                            {item.location}
+                                                        </Typography>
+                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "16%" } }}>
+                                                            {formatMoney(item.amount)}
+                                                        </Typography>
+                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "16%" } }}>
+                                                            {formatDate(item.created_at)}
+                                                        </Typography>
+                                                        <Button
+                                                            variant='contained'
+                                                            sx={{ my: 1, width: { xs: "100%", sm: "100%", md: "16%" } }}
+                                                            onClick={() => {
+                                                                setSelectedData(item);
+                                                                setViewTicket(true);
+                                                            }}
+                                                        >
+                                                            Ona Tiketi
+                                                        </Button>
+                                                    </Box>
+                                                </Watermark>
                                             );
                                         })}
                                     </Box>

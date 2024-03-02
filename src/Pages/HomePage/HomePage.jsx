@@ -19,6 +19,8 @@ function HomePage() {
     const payTicketValues = [
         {
             ticket_owner: "",
+            date_of_birth: "",
+            distance: "",
             t_shirt_size: "",
             amount: 30000,
             phone_number: "",
@@ -31,6 +33,8 @@ function HomePage() {
     const donateValues = [
         {
             ticket_owner: "",
+            date_of_birth: "",
+            distance: "",
             amount: 1000,
             phone_number: "",
             location: "",
@@ -178,7 +182,7 @@ function HomePage() {
         },
         {
             title: "UHAMASISHAJI WA JAMII",
-            body: "Mbio hizi za Pugu Marathon zinahamasisha jamii kufanya mazoezi ili kuwa na afya bora ili kuepuka na magonjwa ambayo yanaweza zuilika kwa kutokufanya mazoezi.",
+            body: "Mbio hizi za Pugu Marathon zinahamasisha jamii kufanya mazoezi ili kuwa na afya bora ili kuepuka na magonjwa ambayo yanaweza zuilika kwa kufanya mazoezi.",
             imageSrc: "/assets/images/marathon1.webp",
             bgColor: "#1c4571",
             button1: {

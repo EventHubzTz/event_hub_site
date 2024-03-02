@@ -55,8 +55,8 @@ const faq = [
     },
     {
         id: "panel3",
-        question: "Je naweza kuchania mbio hizi?",
-        answer: "Mtu yeyote anweza kuchangia mbio hizi pasipo na yeye kushiriki kukimbia mbio na washiriki wengine"
+        question: "Je naweza kuchangia mbio hizi?",
+        answer: "Mtu yeyote anaweza kuchangia mbio hizi pasipo na yeye kushiriki kukimbia mbio na washiriki wengine"
     }
 ]
 
