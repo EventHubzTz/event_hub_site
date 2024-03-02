@@ -78,7 +78,7 @@ export const FormDialog = ({
 
     const getPaymentDetails = React.useCallback(() => {
         if (transactionID !== "") {
-            if (timeCounter < 60) {
+            if (timeCounter < 60 && !hasPaid) {
                 setTimeCounter(timeCounter + 3);
                 authPostRequest(
                     getTransactionByTransactionIDUrl,
@@ -89,7 +89,6 @@ export const FormDialog = ({
                         if (data?.payment_status === "COMPLETED") {
                             setActiveStep(4);
                             setHasPaid(true);
-                            setTimeCounter(60);
                             setPaymentDetails(data);
                         }
                     },
