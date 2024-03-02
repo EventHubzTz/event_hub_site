@@ -97,10 +97,9 @@ export const FormDialog = ({
                 );
             } else {
                 setActiveStep(4);
-                setHasPaid(false);
             }
         }
-    }, [transactionID, timeCounter]);
+    }, [transactionID, timeCounter, hasPaid]);
 
     React.useEffect(() => {
         const timeoutId = setInterval(() => {
