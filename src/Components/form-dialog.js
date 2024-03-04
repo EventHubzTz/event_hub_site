@@ -384,7 +384,7 @@ export const FormDialog = ({
                                                 >
                                                     <Avatar
                                                         alt='logo'
-                                                        src='/assets/images/logo.png'
+                                                        src='/assets/images/logo.jpeg'
                                                         sx={{
                                                             width: 80,
                                                             height: 80
