@@ -27,7 +27,7 @@ function HomePage() {
             location: "",
             otp: "",
             event_id: 1,
-            event_package_id: 1,
+            event_package_id: 2,
         },
     ];
     const donateValues = [
@@ -40,7 +40,7 @@ function HomePage() {
             location: "",
             otp: "",
             event_id: 1,
-            event_package_id: 1,
+            event_package_id: 2,
         },
     ];
 
