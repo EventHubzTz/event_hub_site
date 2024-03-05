@@ -229,6 +229,16 @@ function ViewTicket({ open, handleClose }) {
                                         </Grid>
                                         <Grid item xs={6}>
                                             <Typography variant='body1'>
+                                                Umbali:
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
+                                                {selectedData?.distance}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
                                                 Simu:
                                             </Typography>
                                         </Grid>
@@ -244,16 +254,6 @@ function ViewTicket({ open, handleClose }) {
                                     </Typography>
                                     <Divider sx={{ my: 0.5 }} />
                                     <Grid container>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                Muamala:
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1' noWrap>
-                                                {selectedData?.transaction_id}
-                                            </Typography>
-                                        </Grid>
                                         <Grid item xs={6}>
                                             <Typography variant='body1'>
                                                 Tarehe:
@@ -324,24 +324,27 @@ function ViewTicket({ open, handleClose }) {
                                                         border={1}
                                                         borderColor="lightgray"
                                                     >
-                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "16%" } }}>
+                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "14%" } }}>
                                                             {item.ticket_owner}
                                                         </Typography>
-                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "16%" } }}>
+                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "14%" } }}>
                                                             {item.t_shirt_size}
                                                         </Typography>
-                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "16%" } }}>
+                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "14%" } }}>
+                                                            {item.distance}
+                                                        </Typography>
+                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "14%" } }}>
                                                             {item.location}
                                                         </Typography>
-                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "16%" } }}>
+                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "14%" } }}>
                                                             {formatMoney(item.amount)}
                                                         </Typography>
-                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "16%" } }}>
+                                                        <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "14%" } }}>
                                                             {formatDate(item.created_at)}
                                                         </Typography>
                                                         <Button
                                                             variant='contained'
-                                                            sx={{ my: 1, width: { xs: "100%", sm: "100%", md: "16%" } }}
+                                                            sx={{ my: 1, width: { xs: "100%", sm: "100%", md: "14%" } }}
                                                             onClick={() => {
                                                                 setSelectedData(item);
                                                                 setViewTicket(true);
