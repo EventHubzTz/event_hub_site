@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppBar, Avatar, Box, Button, CircularProgress, Container, Dialog, DialogContent, IconButton, TablePagination, Toolbar, Typography } from '@mui/material'
+import { AppBar, Avatar, Box, Button, CircularProgress, Container, Dialog, DialogContent, Divider, Grid, IconButton, TablePagination, Toolbar, Typography } from '@mui/material'
 import { Close } from '@mui/icons-material'
 import { CustomSearch } from "./custom-search";
 import { authPostRequest } from '../services/api-service';
@@ -157,7 +157,7 @@ function ViewTicket({ open, handleClose }) {
                                 </Box>
                                 <Box
                                     ref={printRef}
-                                    sx={{ p: { xs: 2, sm: 2, md: 5 }, maxWidth: "300px" }}
+                                    sx={{ p: { xs: 2, sm: 2, md: 2 }, maxWidth: "300px" }}
                                     border={1}
                                     borderColor="lightgray"
                                 >
@@ -166,7 +166,6 @@ function ViewTicket({ open, handleClose }) {
                                         sx={{
                                             display: "flex",
                                             alignItems: "center",
-                                            mb: 3,
                                             alignContent: "end",
                                         }}
                                     >
@@ -186,24 +185,96 @@ function ViewTicket({ open, handleClose }) {
                                                 fontWeight: 900
                                             }}
                                         >
-                                            PUGU MARATHON
+                                            MARATHON
                                         </Typography>
                                     </Box>
-                                    <Typography variant='body1' sx={{ my: 0.5 }}>
-                                        <b>Jina:</b> {selectedData?.ticket_owner}
+                                    <Typography textAlign="center" variant='body1'>
+                                        <b>Taarifa Za Risiti</b>
                                     </Typography>
-                                    <Typography variant='body1' sx={{ my: 0.5 }}>
-                                        <b>T Shirt:</b> {selectedData?.t_shirt_size}
+                                    <Divider sx={{ my: 0.5 }} />
+                                    <Typography textAlign="center" variant='body1' sx={{ mt: 0.5 }}>
+                                        <b>Taarifa Za Akaunti</b>
                                     </Typography>
-                                    <Typography variant='body1' sx={{ my: 0.5 }}>
-                                        <b>Mahali:</b> {selectedData?.location}
+                                    <Divider sx={{ my: 0.5 }} />
+                                    <Grid container>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
+                                                Mahali:
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
+                                                {selectedData?.location}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
+                                                Jina:
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
+                                                {selectedData?.ticket_owner}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
+                                                T Shirt:
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
+                                                {selectedData?.t_shirt_size}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
+                                                Simu:
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
+                                                {selectedData?.phone_number}
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
+                                    <Divider sx={{ my: 0.5 }} />
+                                    <Typography textAlign="center" variant='body1' sx={{ mt: 0.5 }}>
+                                        <b>Taarifa Za Muamala</b>
                                     </Typography>
-                                    <Typography variant='body1' sx={{ my: 0.5 }}>
-                                        <b>Kiasi:</b> {formatMoney(selectedData?.amount)}
-                                    </Typography>
-                                    <Typography variant='body1' sx={{ my: 0.5 }}>
-                                        <b>Tarehe:</b> {formatDate(selectedData?.created_at)}
-                                    </Typography>
+                                    <Divider sx={{ my: 0.5 }} />
+                                    <Grid container>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
+                                                Muamala:
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1' noWrap>
+                                                {selectedData?.transaction_id}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
+                                                Tarehe:
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
+                                                {formatDate(selectedData?.created_at)}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
+                                                Kiasi:
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant='body1'>
+                                                {formatMoney(selectedData?.amount)}
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
                                     {/* </Watermark> */}
                                 </Box>
                             </Box>

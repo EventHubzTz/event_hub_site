@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar, Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, InputAdornment, MenuItem, OutlinedInput, Slide, TextField, Typography, } from '@mui/material'
+import { Avatar, Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, IconButton, InputAdornment, MenuItem, OutlinedInput, Slide, TextField, Typography, } from '@mui/material'
 import { Form, Formik } from 'formik'
 import * as Yup from "yup"
 import { authPostRequest } from '../services/api-service';
@@ -369,7 +369,7 @@ export const FormDialog = ({
                                             </Box>
                                             <Box
                                                 ref={printRef}
-                                                sx={{ p: { xs: 2, sm: 2, md: 5 }, maxWidth: "300px" }}
+                                                sx={{ p: { xs: 2, sm: 2, md: 2 }, maxWidth: "300px" }}
                                                 border={1}
                                                 borderColor="lightgray"
                                             >
@@ -378,7 +378,6 @@ export const FormDialog = ({
                                                     sx={{
                                                         display: "flex",
                                                         alignItems: "center",
-                                                        mb: 3,
                                                         alignContent: "end",
                                                     }}
                                                 >
@@ -398,24 +397,96 @@ export const FormDialog = ({
                                                             fontWeight: 900
                                                         }}
                                                     >
-                                                        PUGU MARATHON
+                                                        MARATHON
                                                     </Typography>
                                                 </Box>
-                                                <Typography variant='body1' sx={{ my: 0.5 }}>
-                                                    <b>Jina:</b> {paymentDetails?.ticket_owner}
+                                                <Typography textAlign="center" variant='body1'>
+                                                    <b>Taarifa Za Risiti</b>
                                                 </Typography>
-                                                <Typography variant='body1' sx={{ my: 0.5 }}>
-                                                    <b>T Shirt:</b> {paymentDetails?.t_shirt_size}
+                                                <Divider sx={{ my: 0.5 }} />
+                                                <Typography textAlign="center" variant='body1' sx={{ mt: 0.5 }}>
+                                                    <b>Taarifa Za Akaunti</b>
                                                 </Typography>
-                                                <Typography variant='body1' sx={{ my: 0.5 }}>
-                                                    <b>Mahali:</b> {paymentDetails?.location}
+                                                <Divider sx={{ my: 0.5 }} />
+                                                <Grid container>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
+                                                            Mahali:
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
+                                                            {paymentDetails?.location}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
+                                                            Jina:
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
+                                                            {paymentDetails?.ticket_owner}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
+                                                            T Shirt:
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
+                                                            {paymentDetails?.t_shirt_size}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
+                                                            Simu:
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
+                                                            {paymentDetails?.phone_number}
+                                                        </Typography>
+                                                    </Grid>
+                                                </Grid>
+                                                <Divider sx={{ my: 0.5 }} />
+                                                <Typography textAlign="center" variant='body1' sx={{ mt: 0.5 }}>
+                                                    <b>Taarifa Za Muamala</b>
                                                 </Typography>
-                                                <Typography variant='body1' sx={{ my: 0.5 }}>
-                                                    <b>Kiasi:</b> {formatMoney(paymentDetails?.amount)}
-                                                </Typography>
-                                                <Typography variant='body1' sx={{ my: 0.5 }}>
-                                                    <b>Tarehe:</b> {formatDate(paymentDetails?.created_at)}
-                                                </Typography>
+                                                <Divider sx={{ my: 0.5 }} />
+                                                <Grid container>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
+                                                            Muamala:
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1' noWrap>
+                                                            {paymentDetails?.transaction_id}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
+                                                            Tarehe:
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
+                                                            {formatDate(paymentDetails?.created_at)}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
+                                                            Kiasi:
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
+                                                            {formatMoney(paymentDetails?.amount)}
+                                                        </Typography>
+                                                    </Grid>
+                                                </Grid>
                                                 {/* </Watermark> */}
                                             </Box>
                                         </Box>
