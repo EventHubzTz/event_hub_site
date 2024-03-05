@@ -441,6 +441,16 @@ export const FormDialog = ({
                                                     </Grid>
                                                     <Grid item xs={6}>
                                                         <Typography variant='body1'>
+                                                            Umbali:
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
+                                                            {paymentDetails?.distance}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Typography variant='body1'>
                                                             Simu:
                                                         </Typography>
                                                     </Grid>
@@ -456,16 +466,6 @@ export const FormDialog = ({
                                                 </Typography>
                                                 <Divider sx={{ my: 0.5 }} />
                                                 <Grid container>
-                                                    <Grid item xs={6}>
-                                                        <Typography variant='body1'>
-                                                            Muamala:
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid item xs={6}>
-                                                        <Typography variant='body1' noWrap>
-                                                            {paymentDetails?.transaction_id}
-                                                        </Typography>
-                                                    </Grid>
                                                     <Grid item xs={6}>
                                                         <Typography variant='body1'>
                                                             Tarehe:
