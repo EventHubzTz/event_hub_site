@@ -91,7 +91,7 @@ function HomePage() {
         {
             title: "NAMNA YA KUPATA TIKETI YAKO",
             body: "Ni rahisi kupata tiketi yako kwa njia ya online",
-            imageSrc: "/assets/images/marathon1.webp",
+            imageSrc: "/assets/images/marathon1.jpeg",
             button1: {
                 text: "Nunua Tiketi",
                 variant: "contained",
@@ -117,7 +117,7 @@ function HomePage() {
         {
             title: "JIUNGE NA SISI KAMA MFADHILI!",
             body: "Unaweza ukalipia ili kufadhili mbio hizi pasipo na wewe kukimbia na washiriki wengine kwa kubonyeza kitufe kilichoandikwa CHANGIA.",
-            imageSrc: "/assets/images/marathon2.webp",
+            imageSrc: "/assets/images/marathon2.jpeg",
             bgColor: "#1c4571",
             button1: {
                 text: "Nunua Tiketi",
@@ -157,7 +157,7 @@ function HomePage() {
         {
             title: "NUNUA TIKETI",
             body: "Ni rahisi zaidi kununua tiketi kwa kubonyeza kitufe kilichoandikwa NUNUA TIKETI halafu utajaza taarifa husika za mshiriki anaetaka kununuliwa tiketi.",
-            imageSrc: "/assets/images/marathon3.webp",
+            imageSrc: "/assets/images/marathon3.jpeg",
             button1: {
                 text: "Nunua Tiketi",
                 variant: "contained",
@@ -183,7 +183,7 @@ function HomePage() {
         {
             title: "UHAMASISHAJI WA JAMII",
             body: "Mbio hizi za Pugu Marathon zinahamasisha jamii kufanya mazoezi ili kuwa na afya bora ili kuepuka na magonjwa ambayo yanaweza zuilika kwa kufanya mazoezi.",
-            imageSrc: "/assets/images/marathon1.webp",
+            imageSrc: "/assets/images/marathon4.jpeg",
             bgColor: "#1c4571",
             button1: {
                 text: "Nunua Tiketi",
