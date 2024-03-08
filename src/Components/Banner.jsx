@@ -5,7 +5,7 @@ import { Box, Container, Typography } from '@mui/material'
 function Banner() {
     const items = [
         {
-            src: "https://www.service.eventhubtz.com/products/images/hlkcd8xfezhzba2g1jsi3d52191a-7f96-4118-abe5-7c532cfed2ba.jpg"
+            src: "/assets/images/banner.jpeg"
         }
     ]
 
