@@ -1,8 +1,8 @@
 //LIVE SERVER BASE URLs
-export const eventHubServiceUrl = "https://www.service.eventhubtz.com"
+// export const eventHubServiceUrl = "https://www.service.eventhubtz.com"
 
 //TEST BED BASE URLs
-// export const eventHubServiceUrl = "https://www.testbed.service.eventhubtz.com"
+export const eventHubServiceUrl = "https://www.testbed.service.eventhubtz.com"
 
 //LOCAL SERVER BASE URLs
 // export const eventHubServiceUrl = "http://192.168.1.142:3009"
