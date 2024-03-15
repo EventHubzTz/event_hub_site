@@ -15,7 +15,7 @@ const footerItems = [
         icon: <AddLocationIcon sx={{ color: "white", mr: 1 }} />
     },
     {
-        title: "+255 659 766 633",
+        title: "+255 784 757 471",
         icon: <PhoneIcon sx={{ color: "white", mr: 1 }} />
     },
     {

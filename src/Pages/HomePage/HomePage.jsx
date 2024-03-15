@@ -7,18 +7,20 @@ import Footer from '../../Components/Footer'
 import { FormDialog } from '../../Components/form-dialog'
 import { CREATE } from '../../Utils/constant'
 import { donateFormFields, paymentFormFields } from '../../seed/form-fields'
-import { makePaymentUrl, requestOTPUrl, verifyOTPUrl } from '../../seed/url'
+import { getAllDekaniaUrl, makePaymentUrl, requestOTPUrl, verifyOTPUrl } from '../../seed/url'
 import ViewTicket from '../../Components/ViewTicket'
+import { authGetRequest } from '../../services/api-service'
 
 function HomePage() {
     const [openBuyTicketDialog, setOpenBuyTicketDialog] = React.useState(false);
     const [openDonateDialog, setOpenDonateDialog] = React.useState(false);
     const [openViewTicketDialog, setOpenViewTicketDialog] = React.useState(false);
-    const [paymentFields, setPaymentFields] = React.useState(paymentFormFields);
-    const [donateFields, setDonateFields] = React.useState(donateFormFields);
+    const [paymentFields, setPaymentFields] = React.useState([]);
+    const [donateFields, setDonateFields] = React.useState([]);
     const payTicketValues = [
         {
-            ticket_owner: "",
+            ticket_owner_first_name: "",
+            ticket_owner_last_name: "",
             date_of_birth: "",
             distance: "",
             t_shirt_size: "",
@@ -32,7 +34,8 @@ function HomePage() {
     ];
     const donateValues = [
         {
-            ticket_owner: "",
+            ticket_owner_first_name: "",
+            ticket_owner_last_name: "",
             date_of_birth: "",
             distance: "",
             amount: 1000,
@@ -220,6 +223,34 @@ function HomePage() {
             }
         }
     ]
+
+    React.useEffect(() => {
+        authGetRequest(
+            getAllDekaniaUrl,
+            (data) => {
+                const newDekania = data.map((dekania) => {
+                    const newItem = {};
+                    ["label", "value"].forEach((item) => {
+                        if (item === "label") {
+                            newItem[item] = dekania.dekania_name;
+                        }
+                        if (item === "value") {
+                            newItem[item] = dekania.dekania_name;
+                        }
+                    });
+                    return newItem;
+                });
+                let newPaymentFormFields = paymentFormFields;
+                newPaymentFormFields[7].items = newDekania;
+                setPaymentFields(newPaymentFormFields);
+
+                let newDonationFormFields = donateFormFields;
+                newDonationFormFields[4].items = newDekania;
+                setDonateFields(newDonationFormFields);
+            },
+            (error) => { }
+        )
+    }, [])
 
     return (
         <>

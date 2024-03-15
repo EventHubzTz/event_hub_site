@@ -1,5 +1,6 @@
 export const paymentFormFields = [
-    { name: "ticket_owner", type: "text", label: "Jina La Mwenye Tiketi", notRequired: false, minimumCharacters: 3 },
+    { name: "ticket_owner_first_name", type: "text", label: "Jina La Kwanza", notRequired: false, minimumCharacters: 3 },
+    { name: "ticket_owner_last_name", type: "text", label: "Jina La Mwisho", notRequired: false, minimumCharacters: 3 },
     { name: "date_of_birth", type: "date", label: "Tarehe ya Kuzaliwa", notRequired: false, minimumCharacters: 3 },
     {
         name: "distance",
@@ -31,14 +32,15 @@ export const paymentFormFields = [
     },
     { name: "amount", type: "number", label: "Kiasi (Unaweza lipa zaidi)", notRequired: false, minimumCharacters: 3 },
     { name: "phone_number", type: "text", label: "Namba ya Simu (07xxxxxxxx)", notRequired: false, minimumCharacters: 10 },
-    { name: "location", type: "text", label: "Mahali", notRequired: false, minimumCharacters: 3 },
+    { name: "location", type: "select", label: "Mahali", items: [], notRequired: false, minimumCharacters: 1 },
 ]
 
 export const donateFormFields = [
-    { name: "ticket_owner", type: "text", label: "Jina Kamili", notRequired: false, minimumCharacters: 3 },
+    { name: "ticket_owner_first_name", type: "text", label: "Jina La Kwanza", notRequired: false, minimumCharacters: 3 },
+    { name: "ticket_owner_last_name", type: "text", label: "Jina La Mwisho", notRequired: false, minimumCharacters: 3 },
     { name: "amount", type: "number", label: "Kiasi (Unaweza lipa zaidi)", notRequired: false, minimumCharacters: 3 },
     { name: "phone_number", type: "text", label: "Namba ya Simu (07xxxxxxxx)", notRequired: false, minimumCharacters: 10 },
-    { name: "location", type: "text", label: "Mahali", notRequired: false, minimumCharacters: 3 },
+    { name: "location", type: "select", label: "Mahali", items: [], notRequired: false, minimumCharacters: 1 },
 ]
 
 export const otpFormFields = [
