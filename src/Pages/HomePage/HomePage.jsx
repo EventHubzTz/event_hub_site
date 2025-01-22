@@ -15,8 +15,8 @@ function HomePage() {
     const [openBuyTicketDialog, setOpenBuyTicketDialog] = React.useState(false);
     const [openDonateDialog, setOpenDonateDialog] = React.useState(false);
     const [openViewTicketDialog, setOpenViewTicketDialog] = React.useState(false);
-    const [paymentFields, setPaymentFields] = React.useState([]);
-    const [donateFields, setDonateFields] = React.useState([]);
+    const [paymentFields, setPaymentFields] = React.useState(paymentFormFields);
+    const [donateFields, setDonateFields] = React.useState(donateFormFields);
     const payTicketValues = [
         {
             ticket_owner_first_name: "",
