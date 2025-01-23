@@ -28,8 +28,9 @@ function HomePage() {
             phone_number: "",
             location: "",
             otp: "",
-            event_id: 1,
-            event_package_id: 2,
+            event_id: 4,
+            event_package_id: 3,
+            user_id: 1
         },
     ];
     const donateValues = [
@@ -42,8 +43,9 @@ function HomePage() {
             phone_number: "",
             location: "",
             otp: "",
-            event_id: 1,
-            event_package_id: 2,
+            event_id: 4,
+            event_package_id: 3,
+            user_id: 1
         },
     ];
 
