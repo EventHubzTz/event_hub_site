@@ -9,7 +9,7 @@ import { CREATE } from '../../Utils/constant'
 import { donateFormFields, paymentFormFields } from '../../seed/form-fields'
 import { getAllDekaniaUrl, makePaymentUrl, requestOTPUrl, verifyOTPUrl } from '../../seed/url'
 import ViewTicket from '../../Components/ViewTicket'
-import { authGetRequest } from '../../services/api-service'
+import { getRequest } from '../../services/api-service'
 
 function HomePage() {
     const [openBuyTicketDialog, setOpenBuyTicketDialog] = React.useState(false);
@@ -227,7 +227,7 @@ function HomePage() {
     ]
 
     React.useEffect(() => {
-        authGetRequest(
+        getRequest(
             getAllDekaniaUrl,
             (data) => {
                 const newDekania = data.map((dekania) => {
