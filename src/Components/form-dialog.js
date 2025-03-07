@@ -4,7 +4,7 @@ import { Form, Formik } from 'formik'
 import * as Yup from "yup"
 import { authPostRequest } from '../services/api-service';
 import { Attachment } from '@mui/icons-material';
-import { otpFormFields } from '../seed/form-fields';
+import { otpFormFields, paymentFormFields } from '../seed/form-fields';
 import { MuiOtpInput } from 'mui-one-time-password-input';
 import { getTransactionByTransactionIDUrl } from '../seed/url';
 import { formatDate, formatMoney } from '../Utils/constant';
@@ -29,7 +29,9 @@ export const FormDialog = ({
     firstCallbackUrl,
     secondCallbackUrl,
     thirdCallbackUrl,
+    dekania,
 }) => {
+    console.log(dekania)
     const [activeStep, setActiveStep] = React.useState(1);
     const [hasPaid, setHasPaid] = React.useState(false);
     const [paymentDetails, setPaymentDetails] = React.useState({});
@@ -214,6 +216,12 @@ export const FormDialog = ({
                                                         helperText={touched[field.name] && errors[field.name]}
                                                         onBlur={handleBlur}
                                                         onChange={(event) => {
+                                                            if (event.target.value.trim().toLowerCase() === "⁠dar-es-salaam") {
+                                                                setFields([
+                                                                    ...paymentFormFields,
+                                                                    { name: "location", type: "select", label: "Dekania", items: dekania, notRequired: false, minimumCharacters: 1 }
+                                                                ])
+                                                            }
                                                             setFieldValue(field.name, event.target.value)
                                                         }}
                                                         fullWidth

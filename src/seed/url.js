@@ -13,4 +13,5 @@ export const verifyOTPUrl = `${eventHubServiceUrl}/api/v1/verify/phone`
 export const makePaymentUrl = `${eventHubServiceUrl}/api/v1/pugu/marathon/push/ussd`
 export const getAllPaymentTransactionsUrl = `${eventHubServiceUrl}/api/v1/get/payment/transaction`
 export const getTransactionByTransactionIDUrl = `${eventHubServiceUrl}/api/v1/get/transaction/by/transaction/id`
+export const getAllRegionsUrl = `${eventHubServiceUrl}/api/v1/get/all/regions`
 export const getAllDekaniaUrl = `${eventHubServiceUrl}/api/v1/get/all/dekania`

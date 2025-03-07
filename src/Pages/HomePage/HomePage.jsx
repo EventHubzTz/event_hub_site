@@ -7,7 +7,7 @@ import Footer from '../../Components/Footer'
 import { FormDialog } from '../../Components/form-dialog'
 import { CREATE } from '../../Utils/constant'
 import { donateFormFields, paymentFormFields } from '../../seed/form-fields'
-import { getAllDekaniaUrl, makePaymentUrl, requestOTPUrl, verifyOTPUrl } from '../../seed/url'
+import { getAllDekaniaUrl, getAllRegionsUrl, makePaymentUrl, requestOTPUrl, verifyOTPUrl } from '../../seed/url'
 import ViewTicket from '../../Components/ViewTicket'
 import { getRequest } from '../../services/api-service'
 
@@ -17,6 +17,7 @@ function HomePage() {
     const [openViewTicketDialog, setOpenViewTicketDialog] = React.useState(false);
     const [paymentFields, setPaymentFields] = React.useState(paymentFormFields);
     const [donateFields, setDonateFields] = React.useState(donateFormFields);
+    const [dekania, setDekania] = React.useState([]);
     const payTicketValues = [
         {
             ticket_owner_first_name: "",
@@ -228,6 +229,34 @@ function HomePage() {
 
     React.useEffect(() => {
         getRequest(
+            getAllRegionsUrl,
+            (data) => {
+                const newRegions = data.map((region) => {
+                    const newItem = {};
+                    ["label", "value"].forEach((item) => {
+                        if (item === "label") {
+                            newItem[item] = region.region_name;
+                        }
+                        if (item === "value") {
+                            newItem[item] = region.region_name;
+                        }
+                    });
+                    return newItem;
+                });
+                let newPaymentFormFields = paymentFormFields;
+                newPaymentFormFields[7].items = newRegions;
+                setPaymentFields(newPaymentFormFields);
+
+                let newDonationFormFields = donateFormFields;
+                newDonationFormFields[4].items = newRegions;
+                setDonateFields(newDonationFormFields);
+            },
+            (error) => { }
+        )
+    }, [])
+
+    React.useEffect(() => {
+        getRequest(
             getAllDekaniaUrl,
             (data) => {
                 const newDekania = data.map((dekania) => {
@@ -243,12 +272,13 @@ function HomePage() {
                     return newItem;
                 });
                 let newPaymentFormFields = paymentFormFields;
-                newPaymentFormFields[7].items = newDekania;
+                newPaymentFormFields[8].items = newDekania;
                 setPaymentFields(newPaymentFormFields);
 
                 let newDonationFormFields = donateFormFields;
                 newDonationFormFields[4].items = newDekania;
                 setDonateFields(newDonationFormFields);
+                setDekania(newDekania);
             },
             (error) => { }
         )
@@ -268,6 +298,7 @@ function HomePage() {
                     firstCallbackUrl={requestOTPUrl}
                     secondCallbackUrl={verifyOTPUrl}
                     thirdCallbackUrl={makePaymentUrl}
+                    dekania={dekania}
                 />
             )}
             {openDonateDialog && (
@@ -282,6 +313,7 @@ function HomePage() {
                     firstCallbackUrl={requestOTPUrl}
                     secondCallbackUrl={verifyOTPUrl}
                     thirdCallbackUrl={makePaymentUrl}
+                    dekania={dekania}
                 />
             )}
             {openViewTicketDialog && (
