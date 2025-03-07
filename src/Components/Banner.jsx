@@ -1,6 +1,6 @@
 import React from 'react';
 import Carousel from 'react-material-ui-carousel'
-import { Box, Container, Typography } from '@mui/material'
+import { Box, Button, } from '@mui/material'
 
 function Banner() {
     const items = [
@@ -14,7 +14,7 @@ function Banner() {
             indicators={false}
             stopAutoPlayOnHover={false}
             sx={{
-                height: { xs: "150px", sm: "280px", md: "410px", lg: "500px", xl: "600px" }
+                height: '80vh',
             }}
         >
             {items.map((item, index) => {
@@ -35,56 +35,44 @@ function Item({ item, index }) {
         <Box
             sx={{
                 position: 'relative',
+                height: '80vh',
             }}
         >
             <Box
                 key={index}
-                component='img'
                 sx={{
                     width: "100vw",
-                }}
-                alt="Logo"
-                src={item.src}
-            />
-            <Box
-                sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
                     height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'rgba(0, 0, 0, 0.6)',
+                    backgroundImage: `url(${item.src})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
                 }}
             >
-                <Container>
-                    <Typography
-                        variant='h5'
-                        sx={{
-                            color: 'white',
-                            fontSize: '24px',
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                        }}
-                    >
-                        {/* Title */}
-                    </Typography>
-                    <br />
-                    <Typography
-                        variant='body1'
-                        sx={{
-                            display: { xs: 'none', md: 'flex' },
-                            color: 'white',
-                            fontSize: '24px',
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                        }}
-                    >
-                        {/* Description */}
-                    </Typography>
-                </Container>
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: { xs: "column", md: "row" },
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 2,
+                        background: 'rgba(0, 0, 0, 0.6)',
+                    }}
+                >
+                    <Button size='large' variant='contained' sx={{ width: 200, height: 60, fontSize: 20, borderRadius: 4 }}>
+                        <b>Nunua Tiketi</b>
+                    </Button>
+                    <Button size='large' variant='contained' color='success' sx={{ width: 200, height: 60, fontSize: 20, borderRadius: 4 }}>
+                        <b>Changia</b>
+                    </Button>
+                    <Button size='large' variant='contained' sx={{ width: 200, height: 60, fontSize: 20, borderRadius: 4 }}>
+                        <b>Pakua tiketi</b>
+                    </Button>
+                </Box>
             </Box>
         </Box>
     )

@@ -3,7 +3,7 @@ import { Avatar, Box, Button, Chip, Dialog, DialogActions, DialogContent, Dialog
 import { Form, Formik } from 'formik'
 import * as Yup from "yup"
 import { authPostRequest } from '../services/api-service';
-import { Attachment, Close } from '@mui/icons-material';
+import { Attachment } from '@mui/icons-material';
 import { otpFormFields } from '../seed/form-fields';
 import { MuiOtpInput } from 'mui-one-time-password-input';
 import { getTransactionByTransactionIDUrl } from '../seed/url';
@@ -115,7 +115,12 @@ export const FormDialog = ({
             TransitionComponent={Transition}
             aria-describedby="form-dialog"
             fullWidth={true}
-            maxWidth={"md"}
+            maxWidth={"sm"}
+            PaperProps={{
+                sx: {
+                    borderRadius: 4
+                }
+            }}
         >
             <Formik
                 initialValues={{ ...values[0] }}
@@ -181,20 +186,9 @@ export const FormDialog = ({
                         noValidate
                         autoComplete="off"
                     >
-                        <DialogActions>
-                            <IconButton
-                                edge="start"
-                                color="inherit"
-                                aria-label="close"
-                                disabled={isSubmitting}
-                                onClick={() => {
-                                    handleClose()
-                                }}
-                            >
-                                <Close />
-                            </IconButton>
-                        </DialogActions>
-                        <DialogTitle variant='h4'>{`${dialogTitle}`}</DialogTitle>
+                        <DialogTitle variant='h4'>
+                            <b>{`${dialogTitle}`}</b>
+                        </DialogTitle>
                         <DialogContent>
                             {activeStep < 3 &&
                                 <>
@@ -213,7 +207,7 @@ export const FormDialog = ({
                                                         id={field.name}
                                                         name={field.name}
                                                         select
-                                                        margin='normal'
+                                                        margin='dense'
                                                         label={field.label}
                                                         value={values[field.name]}
                                                         error={Boolean(errors[field.name] && touched[field.name])}
@@ -240,7 +234,7 @@ export const FormDialog = ({
                                                             readOnly
                                                             required={field?.notRequired === false}
                                                             type="text"
-                                                            margin="none"
+                                                            margin="dense"
                                                             fullWidth
                                                             error={Boolean(errors[field.name] && touched[field.name])}
                                                             startAdornment={(
@@ -310,7 +304,7 @@ export const FormDialog = ({
                                                                     }}
                                                                     slotProps={{
                                                                         textField: {
-                                                                            margin: "normal",
+                                                                            margin: "dense",
                                                                             error: Boolean(errors[field.name] && touched[field.name]),
                                                                             helperText: touched[field.name] && errors[field.name],
                                                                             onBlur: handleBlur,
@@ -325,7 +319,7 @@ export const FormDialog = ({
                                                                     name={field.name}
                                                                     type={field.type}
                                                                     label={field.label}
-                                                                    margin="normal"
+                                                                    margin="dense"
                                                                     fullWidth
                                                                     value={values[field.name]}
                                                                     error={Boolean(errors[field.name] && touched[field.name])}
@@ -521,7 +515,7 @@ export const FormDialog = ({
                             </Typography>
                         </DialogContent>
                         {activeStep < 3 &&
-                            <DialogActions>
+                            <DialogActions sx={{ alignItems: "center", justifyContent: "center", gap: 4, pb: 2 }}>
                                 {activeStep === 2 &&
                                     <Button
                                         variant='contained'
