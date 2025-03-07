@@ -2,7 +2,11 @@ import React from 'react';
 import Carousel from 'react-material-ui-carousel'
 import { Box, Button, } from '@mui/material'
 
-function Banner() {
+function Banner({
+    handleClickOpenBuyTicketDialog,
+    handleClickDonateDialog,
+    handleClickViewTicketDialog,
+}) {
     const items = [
         {
             src: "/assets/images/banner.jpeg"
@@ -20,7 +24,13 @@ function Banner() {
             {items.map((item, index) => {
                 return (
                     <React.Fragment key={index}>
-                        <Item item={item} index={index} />
+                        <Item
+                            index={index}
+                            item={item}
+                            handleClickOpenBuyTicketDialog={handleClickOpenBuyTicketDialog}
+                            handleClickDonateDialog={handleClickDonateDialog}
+                            handleClickViewTicketDialog={handleClickViewTicketDialog}
+                        />
                     </React.Fragment>
                 )
             })}
@@ -30,7 +40,13 @@ function Banner() {
 
 export default Banner;
 
-function Item({ item, index }) {
+function Item({
+    index,
+    item,
+    handleClickOpenBuyTicketDialog,
+    handleClickDonateDialog,
+    handleClickViewTicketDialog,
+}) {
     return (
         <Box
             sx={{
@@ -63,13 +79,35 @@ function Item({ item, index }) {
                         background: 'rgba(0, 0, 0, 0.6)',
                     }}
                 >
-                    <Button size='large' variant='contained' sx={{ width: 200, height: 60, fontSize: 20, borderRadius: 4 }}>
+                    <Button
+                        size='large'
+                        variant='contained'
+                        sx={{ width: 200, height: 60, fontSize: 20, borderRadius: 4 }}
+                        onClick={() => {
+                            handleClickOpenBuyTicketDialog()
+                        }}
+                    >
                         <b>Nunua Tiketi</b>
                     </Button>
-                    <Button size='large' variant='contained' color='success' sx={{ width: 200, height: 60, fontSize: 20, borderRadius: 4 }}>
+                    <Button
+                        size='large'
+                        variant='contained'
+                        color='success'
+                        sx={{ width: 200, height: 60, fontSize: 20, borderRadius: 4 }}
+                        onClick={() => {
+                            handleClickDonateDialog()
+                        }}
+                    >
                         <b>Changia</b>
                     </Button>
-                    <Button size='large' variant='contained' sx={{ width: 200, height: 60, fontSize: 20, borderRadius: 4 }}>
+                    <Button
+                        size='large'
+                        variant='contained'
+                        sx={{ width: 200, height: 60, fontSize: 20, borderRadius: 4 }}
+                        onClick={() => {
+                            handleClickViewTicketDialog()
+                        }}
+                    >
                         <b>Pakua tiketi</b>
                     </Button>
                 </Box>

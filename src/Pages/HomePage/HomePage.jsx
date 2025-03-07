@@ -291,7 +291,11 @@ function HomePage() {
                 />
             )}
             <TopNav />
-            <Banner />
+            <Banner
+                handleClickOpenBuyTicketDialog={handleClickOpenBuyTicketDialog}
+                handleClickDonateDialog={handleClickDonateDialog}
+                handleClickViewTicketDialog={handleClickViewTicketDialog}
+            />
             <Container
                 maxWidth={"lg"}
             >
