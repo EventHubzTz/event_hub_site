@@ -41,19 +41,27 @@ export const FormDialog = ({
         fields.reduce((obj, field) => {
             if (field.type === 'email') {
                 if (field.notRequired) {
-                    obj[field.name] = Yup.string().email(`${field.label} should be email`)
-                        .required(`${field.label} is required`).optional()
+                    obj[field.name] = Yup.string().email(`${field.label} lazima iwe email`)
+                        .required(`${field.label} ni lazima`).optional()
                 } else {
-                    obj[field.name] = Yup.string().email(`${field.label} should be email`)
-                        .required(`${field.label} is required`)
+                    obj[field.name] = Yup.string().email(`${field.label} lazima iwe email`)
+                        .required(`${field.label} ni lazima`)
+                }
+            } else if (field.name === 'amount') {
+                if (field.notRequired) {
+                    obj[field.name] = Yup.number().min(field.minimumAmount, `${field.label} cha chini ni ${field.minimumAmount}`)
+                        .required(`${field.label} ni lazima`).optional()
+                } else {
+                    obj[field.name] = Yup.number().min(field.minimumAmount, `${field.label} cha chini ni ${field.minimumAmount}`)
+                        .required(`${field.label} ni lazima`)
                 }
             } else {
                 if (field.notRequired) {
-                    obj[field.name] = Yup.string().min(field.minimumCharacters, `${field.label} minimum is ${field.minimumCharacters} characters`)
-                        .required(`${field.label} is required`).optional()
+                    obj[field.name] = Yup.string().min(field.minimumCharacters, `${field.label} cha chini ni ${field.minimumCharacters} characters`)
+                        .required(`${field.label} ni lazima`).optional()
                 } else {
-                    obj[field.name] = Yup.string().min(field.minimumCharacters, `${field.label} minimum is ${field.minimumCharacters} characters`)
-                        .required(`${field.label} is required`)
+                    obj[field.name] = Yup.string().min(field.minimumCharacters, `${field.label} cha chini ni ${field.minimumCharacters} characters`)
+                        .required(`${field.label} ni lazima`)
                 }
             }
             return obj

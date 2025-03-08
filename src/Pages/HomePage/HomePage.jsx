@@ -271,6 +271,7 @@ function HomePage() {
                     });
                     return newItem;
                 });
+                setDekania(newDekania);
                 let newPaymentFormFields = paymentFormFields;
                 newPaymentFormFields[8].items = newDekania;
                 setPaymentFields(newPaymentFormFields);
@@ -278,7 +279,6 @@ function HomePage() {
                 let newDonationFormFields = donateFormFields;
                 newDonationFormFields[4].items = newDekania;
                 setDonateFields(newDonationFormFields);
-                setDekania(newDekania);
             },
             (error) => { }
         )
