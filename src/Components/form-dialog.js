@@ -6,7 +6,7 @@ import { authPostRequest } from '../services/api-service';
 import { Attachment } from '@mui/icons-material';
 import { otpFormFields, paymentFormFields } from '../seed/form-fields';
 import { MuiOtpInput } from 'mui-one-time-password-input';
-import { getContributionByTransactionIDUrl, getTransactionByTransactionIDUrl } from '../seed/url';
+import { getContributionByTransactionIDUrl, getTransactionByTransactionIDUrl, makePaymentUrl } from '../seed/url';
 import { formatDate, formatMoney } from '../Utils/constant';
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -224,11 +224,15 @@ export const FormDialog = ({
                                                         helperText={touched[field.name] && errors[field.name]}
                                                         onBlur={handleBlur}
                                                         onChange={(event) => {
-                                                            if (event.target.value.trim().toLowerCase() === "⁠dar-es-salaam") {
-                                                                setFields([
-                                                                    ...paymentFormFields,
-                                                                    { name: "location", type: "select", label: "Dekania", items: dekania, notRequired: false, minimumCharacters: 1 }
-                                                                ])
+                                                            if (field.name === "region" && thirdCallbackUrl === makePaymentUrl) {
+                                                                if (event.target.value.trim().toLowerCase() === "⁠dar-es-salaam") {
+                                                                    setFields([
+                                                                        ...paymentFormFields,
+                                                                        { name: "location", type: "select", label: "Dekania", items: dekania, notRequired: false, minimumCharacters: 1 }
+                                                                    ])
+                                                                } else {
+                                                                    setFields(paymentFormFields);
+                                                                }
                                                             }
                                                             setFieldValue(field.name, event.target.value)
                                                         }}
