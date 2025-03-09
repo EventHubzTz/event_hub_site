@@ -7,7 +7,7 @@ import Footer from '../../Components/Footer'
 import { FormDialog } from '../../Components/form-dialog'
 import { CREATE } from '../../Utils/constant'
 import { donateFormFields, paymentFormFields } from '../../seed/form-fields'
-import { getAllDekaniaUrl, getAllRegionsUrl, makePaymentUrl, requestOTPUrl, verifyOTPUrl } from '../../seed/url'
+import { getAllDekaniaUrl, getAllRegionsUrl, makeContributionUrl, makePaymentUrl, requestOTPUrl, verifyOTPUrl } from '../../seed/url'
 import ViewTicket from '../../Components/ViewTicket'
 import { getRequest } from '../../services/api-service'
 
@@ -36,17 +36,13 @@ function HomePage() {
     ];
     const donateValues = [
         {
-            ticket_owner_first_name: "",
-            ticket_owner_last_name: "",
-            date_of_birth: "",
-            distance: "",
+            first_name: "",
+            last_name: "",
             amount: 1000,
             phone_number: "",
+            region: "",
             location: "",
             otp: "",
-            event_id: 4,
-            event_package_id: 3,
-            user_id: 1
         },
     ];
 
@@ -312,7 +308,7 @@ function HomePage() {
                     values={donateValues}
                     firstCallbackUrl={requestOTPUrl}
                     secondCallbackUrl={verifyOTPUrl}
-                    thirdCallbackUrl={makePaymentUrl}
+                    thirdCallbackUrl={makeContributionUrl}
                     dekania={dekania}
                 />
             )}

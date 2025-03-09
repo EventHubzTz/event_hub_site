@@ -6,7 +6,7 @@ import { authPostRequest } from '../services/api-service';
 import { Attachment } from '@mui/icons-material';
 import { otpFormFields, paymentFormFields } from '../seed/form-fields';
 import { MuiOtpInput } from 'mui-one-time-password-input';
-import { getTransactionByTransactionIDUrl } from '../seed/url';
+import { getContributionByTransactionIDUrl, getTransactionByTransactionIDUrl } from '../seed/url';
 import { formatDate, formatMoney } from '../Utils/constant';
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -91,7 +91,7 @@ export const FormDialog = ({
             if (timeCounter < 60 && !hasPaid) {
                 setTimeCounter(timeCounter + 3);
                 authPostRequest(
-                    getTransactionByTransactionIDUrl,
+                    values?.[0]?.event_id ? getTransactionByTransactionIDUrl : getContributionByTransactionIDUrl,
                     {
                         transaction_id: transactionID
                     },
@@ -109,7 +109,7 @@ export const FormDialog = ({
                 setActiveStep(4);
             }
         }
-    }, [transactionID, timeCounter, hasPaid]);
+    }, [transactionID, timeCounter, hasPaid, values]);
 
     React.useEffect(() => {
         const timeoutId = setInterval(() => {
