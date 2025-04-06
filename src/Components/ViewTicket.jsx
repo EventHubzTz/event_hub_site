@@ -1,10 +1,10 @@
 import React from 'react'
-import { AppBar, Avatar, Box, Button, CircularProgress, Container, Dialog, DialogContent, Divider, Grid, IconButton, TablePagination, Toolbar, Typography } from '@mui/material'
+import { AppBar, Avatar, Box, Button, CircularProgress, Container, Dialog, DialogContent, Divider, IconButton, TablePagination, Toolbar, Typography } from '@mui/material'
 import { Close } from '@mui/icons-material'
 import { CustomSearch } from "./custom-search";
 import { authPostRequest } from '../services/api-service';
 import { getAllPaymentTransactionsUrl } from '../seed/url';
-import { formatDate, formatMoney } from '../Utils/constant';
+import { formatMoney } from '../Utils/constant';
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { Watermark } from '@hirohe/react-watermark';
@@ -36,7 +36,7 @@ function ViewTicket({ open, handleClose }) {
         const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
 
         pdf.addImage(data, "PNG", 0, 0, pdfWidth, pdfHeight);
-        pdf.save(`${selectedData?.ticket_owner} Ticket`);
+        pdf.save(`${selectedData?.full_name} Ticket`);
     }
 
     const handleSearch = (event) => {
@@ -166,115 +166,71 @@ function ViewTicket({ open, handleClose }) {
                                         sx={{
                                             display: "flex",
                                             alignItems: "center",
-                                            alignContent: "end",
+                                            justifyContent: "center",
                                         }}
                                     >
                                         <Avatar
                                             alt='logo'
                                             src='/assets/images/logo.jpeg'
                                             sx={{
-                                                width: 80,
-                                                height: 80
+                                                width: 40,
+                                                height: 40
                                             }}
                                         />
-                                        <Typography
-                                            variant="h6"
-                                            sx={{
-                                                fontStyle: "italic",
-                                                letterSpacing: 3,
-                                                fontWeight: 900
-                                            }}
-                                        >
-                                            MARATHON
-                                        </Typography>
                                     </Box>
-                                    <Typography textAlign="center" variant='body1'>
-                                        <b>Taarifa Za Risiti</b>
+                                    <Divider sx={{ my: 0.5 }} />
+                                    <Typography variant='body2' sx={{ mt: 1 }}>
+                                        Mkoa
                                     </Typography>
-                                    <Divider sx={{ my: 0.5 }} />
-                                    <Typography textAlign="center" variant='body1' sx={{ mt: 0.5 }}>
-                                        <b>Taarifa Za Akaunti</b>
+                                    <Typography variant='body2' fontWeight={600}>
+                                        {selectedData?.region ? `${selectedData?.region}, ` : ""}
+                                        {selectedData?.location}
                                     </Typography>
-                                    <Divider sx={{ my: 0.5 }} />
-                                    <Grid container>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                Mahali:
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                {selectedData?.location}
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                Jina:
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                {selectedData?.ticket_owner}
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                T Shirt:
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                {selectedData?.t_shirt_size}
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                Umbali:
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                {selectedData?.distance}
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                Simu:
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                {selectedData?.phone_number}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                    <Divider sx={{ my: 0.5 }} />
-                                    <Typography textAlign="center" variant='body1' sx={{ mt: 0.5 }}>
-                                        <b>Taarifa Za Muamala</b>
+                                    <Typography variant='body2' sx={{ mt: 1 }}>
+                                        Jina
                                     </Typography>
-                                    <Divider sx={{ my: 0.5 }} />
-                                    <Grid container>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                Tarehe:
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                {formatDate(selectedData?.created_at)}
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                Kiasi:
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant='body1'>
-                                                {formatMoney(selectedData?.amount)}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
+                                    <Typography variant='body2' fontWeight={600}>
+                                        {selectedData?.full_name}
+                                    </Typography>
+                                    <Typography variant='body2' sx={{ mt: 1 }}>
+                                        T Shirt
+                                    </Typography>
+                                    <Typography variant='body2' fontWeight={600}>
+                                        {selectedData?.t_shirt_size}
+                                    </Typography>
+                                    <Typography variant='body2' sx={{ mt: 1 }}>
+                                        Umbali
+                                    </Typography>
+                                    <Typography variant='body2' fontWeight={600}>
+                                        {selectedData?.distance}
+                                    </Typography>
+                                    <Typography variant='body2' sx={{ mt: 1 }}>
+                                        Simu
+                                    </Typography>
+                                    <Typography variant='body2' fontWeight={600}>
+                                        {selectedData?.phone_number}
+                                    </Typography>
+                                    <Typography variant='body2' sx={{ mt: 1 }}>
+                                        Tarehe
+                                    </Typography>
+                                    <Typography variant='body2' fontWeight={600}>
+                                        {selectedData?.created_at}
+                                    </Typography>
+                                    <Typography variant='body2' sx={{ mt: 1 }}>
+                                        Kiasi
+                                    </Typography>
+                                    <Typography variant='body2' fontWeight={600}>
+                                        {formatMoney(selectedData?.amount)}
+                                    </Typography>
+                                    <Divider sx={{ my: 2 }} />
+                                    <Box sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        my: 2,
+                                    }}>
+                                        <img src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://management.pugumarathon.co.tz/ticket/${selectedData?.transaction_id}`} alt="QR Code" width="100" height="100" />
+                                    </Box>
                                     {/* </Watermark> */}
                                 </Box>
                             </Box>
@@ -325,7 +281,7 @@ function ViewTicket({ open, handleClose }) {
                                                         borderColor="lightgray"
                                                     >
                                                         <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "14%" } }}>
-                                                            {item.ticket_owner}
+                                                            {item.full_name}
                                                         </Typography>
                                                         <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "14%" } }}>
                                                             {item.t_shirt_size}
@@ -340,7 +296,7 @@ function ViewTicket({ open, handleClose }) {
                                                             {formatMoney(item.amount)}
                                                         </Typography>
                                                         <Typography variant='body1' sx={{ width: { xs: "100%", sm: "100%", md: "14%" } }}>
-                                                            {formatDate(item.created_at)}
+                                                            {item.created_at}
                                                         </Typography>
                                                         <Button
                                                             variant='contained'
