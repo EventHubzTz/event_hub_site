@@ -25,10 +25,10 @@ function ViewTicket({ open, handleClose }) {
   });
   const [isLoading, setIsLoading] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
-  const printRef = React.useRef();
+  const ticketRef = React.useRef();
 
   const downloadTicket = async () => {
-    const element = printRef.current;
+    const element = ticketRef.current;
 
     // Capture image
     const canvas = await html2canvas(element, {
@@ -134,7 +134,7 @@ function ViewTicket({ open, handleClose }) {
                 </Box>
 
                 <Box
-                  ref={printRef}
+                  ref={ticketRef}
                   sx={{
                     width: '290px',
                     height: 'auto', // Fit inside 500px height with some margin
