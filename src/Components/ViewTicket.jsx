@@ -242,7 +242,6 @@ function ViewTicket({ open, handleClose }) {
                     </a>
                   </Box>
                 </Box>
-
               </Box>
             ) : (
               <>
