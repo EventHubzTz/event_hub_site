@@ -14,235 +14,234 @@ import { Watermark } from '@hirohe/react-watermark';
 import html2canvas from 'html2canvas';
 
 function ViewTicket({ open, handleClose }) {
-              const [viewTicket, setViewTicket] = React.useState(false);
-              const [selectedData, setSelectedData] = React.useState({});
-              const [searchTerm, setSearchTerm] = React.useState("0");
-              const [tickets, setTickets] = React.useState({
-                page: 1,
-                total_results: 0,
-                total_pages: 0,
-                results: [],
-              });
-              const [isLoading, setIsLoading] = React.useState(false);
-              const [rowsPerPage, setRowsPerPage] = React.useState(25);
-              const printRef = React.useRef();
-          
-              const printInvoice = async () => {
-                const element = printRef.current;
-              
-                // Capture image
-                const canvas = await html2canvas(element, {
-                  scale: 2,
-                  useCORS: true,
-                });
-              
-                const imgData = canvas.toDataURL("image/png");
-              
-                // Create a custom size PDF (same as ticket container)
-                const pdfWidth = 300; // pixels
-                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-              
-                const pdf = new jsPDF({
-                  orientation: "portrait",
-                  unit: "px",
-                  format: [pdfWidth, pdfHeight],
-                });
-              
-                pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-                pdf.save(`${selectedData?.full_name}_Ticket.pdf`);
-              };
-              
-          
-              const handleSearch = (event) => setSearchTerm(event.target.value);
-          
-              const fetcher = React.useCallback((page) => {
-                if (searchTerm.length === 10) {
-                  setIsLoading(true);
-                  authPostRequest(
-                    getAllPaymentTransactionsUrl,
-                    {
-                      phone_number: searchTerm,
-                      sort: "id desc",
-                      limit: rowsPerPage,
-                      page,
-                    },
-                    (data) => {
-                      setTickets(data);
-                      setIsLoading(false);
-                    },
-                    () => {
-                      setTickets({
-                        page: 1,
-                        total_results: 0,
-                        total_pages: 0,
-                        results: [],
-                      });
-                      setIsLoading(false);
-                    }
-                  );
-                }
-              }, [rowsPerPage, searchTerm]);
-          
-              const handlePageChange = React.useCallback((event, value) => {
-                fetcher(value + 1);
-              }, [fetcher]);
-          
-              const handleRowsPerPageChange = React.useCallback((event) => {
-                setRowsPerPage(event.target.value);
-              }, []);
-          
-              React.useEffect(() => {
-                fetcher(1);
-              }, [fetcher, searchTerm]);
-          
-              return (
-                <Dialog
-                  open={open}
-                  onClose={handleClose}
-                  fullScreen
-                  PaperProps={{ style: { boxShadow: "none" } }}
-                >
-                  <DialogContent>
-                    <AppBar position="relative" color="transparent" elevation={0}>
-                      <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-                          <Close />
-                        </IconButton>
-                      </Toolbar>
-                    </AppBar>
-            
-                    <Box component="main" sx={{ flexGrow: 1, pt: 2, pb: 8 }}>
-                      <Container maxWidth={false}>
-                        {viewTicket ? (
-                          <Box>
-                            <Box>
-                              <Button
-                                variant="contained"
-                                sx={{ mr: 2, my: 2 }}
-                                onClick={printInvoice}
-                              >
-                                Download
-                              </Button>
-                              <Button
-                                variant="contained"
-                                color="error"
-                                sx={{ my: 2 }}
-                                onClick={() => setViewTicket(false)}
-                              >
-                                Ghairi
-                              </Button>
-                            </Box>
-                        
-                            <Box
-              ref={printRef}
-              sx={{
-                width: '290px',
-                height: 'auto', // Fit inside 500px height with some margin
-                padding: '10px',
-                backgroundColor: '#fff',
-                fontFamily: 'Arial, sans-serif',
-                fontSize: '12px', // Shrink font to help fit
-                border: '1px solid #ccc',
-                boxSizing: 'border-box',
-                textAlign: 'left',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between'
-              }}
-            >
+  const [viewTicket, setViewTicket] = React.useState(false);
+  const [selectedData, setSelectedData] = React.useState({});
+  const [searchTerm, setSearchTerm] = React.useState("0");
+  const [tickets, setTickets] = React.useState({
+    page: 1,
+    total_results: 0,
+    total_pages: 0,
+    results: [],
+  });
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [rowsPerPage, setRowsPerPage] = React.useState(25);
+  const ticketRef = React.useRef();
+
+  const downloadTicket = async () => {
+    const element = ticketRef.current;
+
+    // Capture image
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+
+    // Create a custom size PDF (same as ticket container)
+    const pdfWidth = 300; // pixels
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "px",
+      format: [pdfWidth, pdfHeight],
+    });
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`${selectedData?.full_name}_Ticket.pdf`);
+  };
+
+
+  const handleSearch = (event) => setSearchTerm(event.target.value);
+
+  const fetcher = React.useCallback((page) => {
+    if (searchTerm.length === 10) {
+      setIsLoading(true);
+      authPostRequest(
+        getAllPaymentTransactionsUrl,
+        {
+          phone_number: searchTerm,
+          sort: "id desc",
+          limit: rowsPerPage,
+          page,
+        },
+        (data) => {
+          setTickets(data);
+          setIsLoading(false);
+        },
+        () => {
+          setTickets({
+            page: 1,
+            total_results: 0,
+            total_pages: 0,
+            results: [],
+          });
+          setIsLoading(false);
+        }
+      );
+    }
+  }, [rowsPerPage, searchTerm]);
+
+  const handlePageChange = React.useCallback((event, value) => {
+    fetcher(value + 1);
+  }, [fetcher]);
+
+  const handleRowsPerPageChange = React.useCallback((event) => {
+    setRowsPerPage(event.target.value);
+  }, []);
+
+  React.useEffect(() => {
+    fetcher(1);
+  }, [fetcher, searchTerm]);
+
+  return (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      fullScreen
+      PaperProps={{ style: { boxShadow: "none" } }}
+    >
+      <DialogContent>
+        <AppBar position="relative" color="transparent" elevation={0}>
+          <Toolbar>
+            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+              <Close />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+
+        <Box component="main" sx={{ flexGrow: 1, pt: 2, pb: 8 }}>
+          <Container maxWidth={false}>
+            {viewTicket ? (
+              <Box>
+                <Box>
+                  <Button
+                    variant="contained"
+                    sx={{ mr: 2, my: 2 }}
+                    onClick={downloadTicket}
+                  >
+                    Download
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    sx={{ my: 2 }}
+                    onClick={() => setViewTicket(false)}
+                  >
+                    Ghairi
+                  </Button>
+                </Box>
+
                 <Box
+                  ref={ticketRef}
                   sx={{
+                    width: '290px',
+                    height: 'auto', // Fit inside 500px height with some margin
+                    padding: '10px',
+                    backgroundColor: '#fff',
+                    fontFamily: 'Arial, sans-serif',
+                    fontSize: '12px', // Shrink font to help fit
+                    border: '1px solid #ccc',
+                    boxSizing: 'border-box',
+                    textAlign: 'left',
                     display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    width: '100%',
-                    mb: 1
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
                   }}
                 >
-                  {/* Logo on the left */}
-                  <Avatar
-                    alt="Pugu Marathon"
-                    src="/assets/images/logo.jpeg"
-                    sx={{ width: 60, height: 60 }}
-                  />
-
-                  {/* Text block on the right */}
-                  <Box sx={{ textAlign: 'right' }}>
-                    <Typography variant="h6" fontWeight={700} sx={{ fontSize: '14px' }}>
-                      PUGU MARATHON
-                    </Typography>
-                    <Typography variant="body2" sx={{ fontSize: '10px' }}>
-                      Mahali: <strong>Pugu, Dar es Salaam</strong>
-                    </Typography>
-                    <Typography variant="body2" sx={{ fontSize: '10px' }}>
-                      Tarehe: <strong>31-05-2025</strong>
-                    </Typography>
-                  </Box>
-                </Box>
-              
-                <Divider sx={{ width: '100%', my: 2 }} />
-
-              {/* Details */}
-              <Box sx={{ width: '100%' }}>
-                {[
-                  { label: 'Mkoa-Dekania', value: `${selectedData?.region || 'Dar es Salaam'} - ${selectedData?.location || ''}` },
-                  { label: 'Jina Kamili', value: selectedData?.full_name },
-                  { label: 'T Shirt Size', value: selectedData?.t_shirt_size },
-                  { label: 'Umbali wa kukimbia', value: selectedData?.distance },
-                  { label: 'Namba Ya Simu', value: selectedData?.phone_number },
-                  { label: 'Tarehe', value: selectedData?.created_at },
-                  { label: 'Kiasi', value: formatMoney(selectedData?.amount) },
-                ].map((item, index) => (
                   <Box
-                    key={index}
                     sx={{
                       display: 'flex',
                       justifyContent: 'space-between',
+                      alignItems: 'center',
                       width: '100%',
-                      mb: 0.5
+                      mb: 1
                     }}
                   >
-                    <Typography variant="body2" sx={{ fontSize: '10px', fontWeight: 600 }}>{item.label}:</Typography>
-                    <Typography variant="body2" sx={{fontsize: '10px'}}>{item.value}</Typography>
-                  </Box>
-                ))}
-              </Box>
-            
-              <Divider sx={{ my: 2, width: '100%' }} />
-            
-              {/* QR Code */}
-              <Box sx={{ textAlign: 'center' }}>
-                <img
-                  crossOrigin="anonymous"
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://management.pugumarathon.co.tz/ticket/${selectedData?.transaction_id}`}
-                  alt="QR Code"
-                  width="80"
-                  height="80"
-                  style={{ display: 'block', margin: '0 auto' }}
-                />
-                <Typography variant="caption" sx={{ mt: 1, display: 'block' }}>
-                  Scan QR to view ticket online
-                </Typography>
-              </Box>
-              <Box>
-                  <a
-                    href="https://pugumarathon.co.tz"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      display: 'block',
-                      textAlign: 'center',
-                      color: 'blue',
-                      textDecoration: 'none',
-                      fontSize: '10px',
-                      marginTop: '8px',
-                    }}
-                  >
-                    https://pugumarathon.co.tz
-                  </a>
-                </Box>
-            </Box>
+                    {/* Logo on the left */}
+                    <Avatar
+                      alt="Pugu Marathon"
+                      src="/assets/images/logo.jpeg"
+                      sx={{ width: 60, height: 60 }}
+                    />
 
+                    {/* Text block on the right */}
+                    <Box sx={{ textAlign: 'right' }}>
+                      <Typography variant="h6" fontWeight={700} sx={{ fontSize: '14px' }}>
+                        PUGU MARATHON
+                      </Typography>
+                      <Typography variant="body2" sx={{ fontSize: '10px' }}>
+                        Mahali: <strong>Pugu, Dar es Salaam</strong>
+                      </Typography>
+                      <Typography variant="body2" sx={{ fontSize: '10px' }}>
+                        Tarehe: <strong>31-05-2025</strong>
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  <Divider sx={{ width: '100%', my: 2 }} />
+
+                  {/* Details */}
+                  <Box sx={{ width: '100%' }}>
+                    {[
+                      { label: 'Mkoa-Dekania', value: `${selectedData?.region || 'Dar es Salaam'} - ${selectedData?.location || ''}` },
+                      { label: 'Jina Kamili', value: selectedData?.full_name },
+                      { label: 'T Shirt Size', value: selectedData?.t_shirt_size },
+                      { label: 'Umbali wa kukimbia', value: selectedData?.distance },
+                      { label: 'Namba Ya Simu', value: selectedData?.phone_number },
+                      { label: 'Tarehe', value: selectedData?.created_at },
+                      { label: 'Kiasi', value: formatMoney(selectedData?.amount) },
+                    ].map((item, index) => (
+                      <Box
+                        key={index}
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          width: '100%',
+                          mb: 0.5
+                        }}
+                      >
+                        <Typography variant="body2" sx={{ fontSize: '10px', fontWeight: 600 }}>{item.label}:</Typography>
+                        <Typography variant="body2" sx={{ fontsize: '10px' }}>{item.value}</Typography>
+                      </Box>
+                    ))}
+                  </Box>
+
+                  <Divider sx={{ my: 2, width: '100%' }} />
+
+                  {/* QR Code */}
+                  <Box sx={{ textAlign: 'center' }}>
+                    <img
+                      crossOrigin="anonymous"
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://management.pugumarathon.co.tz/ticket/${selectedData?.transaction_id}`}
+                      alt="QR Code"
+                      width="80"
+                      height="80"
+                      style={{ display: 'block', margin: '0 auto' }}
+                    />
+                    <Typography variant="caption" sx={{ mt: 1, display: 'block' }}>
+                      Scan QR to view ticket online
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <a
+                      href="https://pugumarathon.co.tz"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'block',
+                        textAlign: 'center',
+                        color: 'blue',
+                        textDecoration: 'none',
+                        fontSize: '10px',
+                        marginTop: '8px',
+                      }}
+                    >
+                      https://pugumarathon.co.tz
+                    </a>
+                  </Box>
+                </Box>
               </Box>
             ) : (
               <>
