@@ -368,98 +368,127 @@ export const FormDialog = ({
                             {activeStep === 4 &&
                                 <>
                                     {hasPaid &&
-                                        <Box>
+                                        <>
                                             <Box>
                                                 <Button
-                                                    variant='contained'
-                                                    sx={{
-                                                        mr: 2,
-                                                        my: 2
-                                                    }}
-                                                    onClick={() => printInvoice()}
+                                                    variant="contained"
+                                                    sx={{ mr: 2, my: 2 }}
+                                                    onClick={printInvoice}
                                                 >
                                                     Download
                                                 </Button>
-                                            </Box>
-                                            <Box
-                                                ref={printRef}
-                                                sx={{ p: { xs: 2, sm: 2, md: 2 }, maxWidth: "300px" }}
-                                                border={1}
-                                                borderColor="lightgray"
-                                            >
-                                                {/* <Watermark text="Pugu Marathon"> */}
+
                                                 <Box
+                                                    ref={printRef}
                                                     sx={{
-                                                        display: "flex",
-                                                        alignItems: "center",
-                                                        justifyContent: "center",
+                                                        width: '290px',
+                                                        height: 'auto', // Fit inside 500px height with some margin
+                                                        padding: '10px',
+                                                        backgroundColor: '#fff',
+                                                        fontFamily: 'Arial, sans-serif',
+                                                        fontSize: '12px', // Shrink font to help fit
+                                                        border: '1px solid #ccc',
+                                                        boxSizing: 'border-box',
+                                                        textAlign: 'left',
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        justifyContent: 'space-between'
                                                     }}
                                                 >
-                                                    <Avatar
-                                                        alt='logo'
-                                                        src='/assets/images/logo.jpeg'
+                                                    <Box
                                                         sx={{
-                                                            width: 40,
-                                                            height: 40
+                                                            display: 'flex',
+                                                            justifyContent: 'space-between',
+                                                            alignItems: 'center',
+                                                            width: '100%',
+                                                            mb: 1
                                                         }}
-                                                    />
+                                                    >
+                                                        {/* Logo on the left */}
+                                                        <Avatar
+                                                            alt="Pugu Marathon"
+                                                            src="/assets/images/logo.jpeg"
+                                                            sx={{ width: 60, height: 60 }}
+                                                        />
+
+                                                        {/* Text block on the right */}
+                                                        <Box sx={{ textAlign: 'right' }}>
+                                                            <Typography variant="h6" fontWeight={700} sx={{ fontSize: '14px' }}>
+                                                                PUGU MARATHON
+                                                            </Typography>
+                                                            <Typography variant="body2" sx={{ fontSize: '10px' }}>
+                                                                Mahali: <strong>Pugu, Dar es Salaam</strong>
+                                                            </Typography>
+                                                            <Typography variant="body2" sx={{ fontSize: '10px' }}>
+                                                                Tarehe: <strong>31-05-2025</strong>
+                                                            </Typography>
+                                                        </Box>
+                                                    </Box>
+
+                                                    <Divider sx={{ width: '100%', my: 2 }} />
+
+                                                    {/* Details */}
+                                                    <Box sx={{ width: '100%' }}>
+                                                        {[
+                                                            { label: 'Mkoa-Dekania', value: `${paymentDetails?.region || 'Dar es Salaam'} - ${paymentDetails?.location || ''}` },
+                                                            { label: 'Jina Kamili', value: paymentDetails?.full_name },
+                                                            { label: 'T Shirt Size', value: paymentDetails?.t_shirt_size },
+                                                            { label: 'Umbali wa kukimbia', value: paymentDetails?.distance },
+                                                            { label: 'Namba Ya Simu', value: paymentDetails?.phone_number },
+                                                            { label: 'Tarehe', value: paymentDetails?.created_at },
+                                                            { label: 'Kiasi', value: formatMoney(paymentDetails?.amount) },
+                                                        ].map((item, index) => (
+                                                            <Box
+                                                                key={index}
+                                                                sx={{
+                                                                    display: 'flex',
+                                                                    justifyContent: 'space-between',
+                                                                    width: '100%',
+                                                                    mb: 0.5
+                                                                }}
+                                                            >
+                                                                <Typography variant="body2" sx={{ fontSize: '10px', fontWeight: 600 }}>{item.label}:</Typography>
+                                                                <Typography variant="body2" sx={{ fontsize: '10px' }}>{item.value}</Typography>
+                                                            </Box>
+                                                        ))}
+                                                    </Box>
+
+                                                    <Divider sx={{ my: 2, width: '100%' }} />
+
+                                                    {/* QR Code */}
+                                                    <Box sx={{ textAlign: 'center' }}>
+                                                        <img
+                                                            crossOrigin="anonymous"
+                                                            src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://management.pugumarathon.co.tz/ticket/${paymentDetails?.transaction_id}`}
+                                                            alt="QR Code"
+                                                            width="80"
+                                                            height="80"
+                                                            style={{ display: 'block', margin: '0 auto' }}
+                                                        />
+                                                        <Typography variant="caption" sx={{ mt: 1, display: 'block' }}>
+                                                            Scan QR to view ticket online
+                                                        </Typography>
+                                                    </Box>
+                                                    <Box>
+                                                        <a
+                                                            href="https://pugumarathon.co.tz"
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            style={{
+                                                                display: 'block',
+                                                                textAlign: 'center',
+                                                                color: 'blue',
+                                                                textDecoration: 'none',
+                                                                fontSize: '10px',
+                                                                marginTop: '8px',
+                                                            }}
+                                                        >
+                                                            https://pugumarathon.co.tz
+                                                        </a>
+                                                    </Box>
                                                 </Box>
-                                                <Divider sx={{ my: 0.5 }} />
-                                                <Typography variant='body2' sx={{ mt: 1 }}>
-                                                    Mkoa
-                                                </Typography>
-                                                <Typography variant='body2' fontWeight={600}>
-                                                    {paymentDetails?.region ? `${paymentDetails?.region}, ` : ""}
-                                                    {paymentDetails?.location}
-                                                </Typography>
-                                                <Typography variant='body2' sx={{ mt: 1 }}>
-                                                    Jina
-                                                </Typography>
-                                                <Typography variant='body2' fontWeight={600}>
-                                                    {paymentDetails?.full_name}
-                                                </Typography>
-                                                <Typography variant='body2' sx={{ mt: 1 }}>
-                                                    T Shirt
-                                                </Typography>
-                                                <Typography variant='body2' fontWeight={600}>
-                                                    {paymentDetails?.t_shirt_size}
-                                                </Typography>
-                                                <Typography variant='body2' sx={{ mt: 1 }}>
-                                                    Umbali
-                                                </Typography>
-                                                <Typography variant='body2' fontWeight={600}>
-                                                    {paymentDetails?.distance}
-                                                </Typography>
-                                                <Typography variant='body2' sx={{ mt: 1 }}>
-                                                    Simu
-                                                </Typography>
-                                                <Typography variant='body2' fontWeight={600}>
-                                                    {paymentDetails?.phone_number}
-                                                </Typography>
-                                                <Typography variant='body2' sx={{ mt: 1 }}>
-                                                    Tarehe
-                                                </Typography>
-                                                <Typography variant='body2' fontWeight={600}>
-                                                    {paymentDetails?.created_at}
-                                                </Typography>
-                                                <Typography variant='body2' sx={{ mt: 1 }}>
-                                                    Kiasi
-                                                </Typography>
-                                                <Typography variant='body2' fontWeight={600}>
-                                                    {formatMoney(paymentDetails?.amount)}
-                                                </Typography>
-                                                <Divider sx={{ my: 2 }} />
-                                                <Box sx={{
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    justifyContent: "center",
-                                                    my: 2,
-                                                }}>
-                                                    <img src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://management.pugumarathon.co.tz/ticket/${paymentDetails?.transaction_id}`} alt="QR Code" width="100" height="100" />
-                                                </Box>
-                                                {/* </Watermark> */}
                                             </Box>
-                                        </Box>
+                                        </>
                                     }
                                     {!hasPaid &&
                                         <>
