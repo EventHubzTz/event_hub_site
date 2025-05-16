@@ -289,7 +289,6 @@ function ViewTicket({ open, handleClose }) {
                               variant="contained"
                               sx={{ my: 1, width: { xs: "100%", md: "14%" } }}
                               onClick={() => {
-                                console.log('Selected Ticket:', item);
                                 setSelectedData(item);
                                 setViewTicket(true);
                               }}

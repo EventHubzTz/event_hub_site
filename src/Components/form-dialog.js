@@ -13,6 +13,7 @@ import html2canvas from "html2canvas";
 import Lottie from 'lottie-react';
 import failedAnimation from "../animations/failed_animation.json";
 import { DatePicker } from '@mui/x-date-pickers';
+import dayjs from 'dayjs';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />
@@ -31,7 +32,6 @@ export const FormDialog = ({
     thirdCallbackUrl,
     dekania,
 }) => {
-    console.log(dekania)
     const [activeStep, setActiveStep] = React.useState(1);
     const [hasPaid, setHasPaid] = React.useState(false);
     const [paymentDetails, setPaymentDetails] = React.useState({});
@@ -70,21 +70,30 @@ export const FormDialog = ({
     const [serverError, setServerError] = React.useState("")
     const printRef = React.useRef();
 
-    async function printInvoice() {
-        // await new Promise((resolve) => setTimeout(resolve, 2000));
-
+    const downloadTicket = async () => {
         const element = printRef.current;
-        const canvas = await html2canvas(element);
-        const data = canvas.toDataURL("image/png");
 
-        const pdf = new jsPDF();
-        const imgProperties = pdf.getImageProperties(data);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
+        // Capture image
+        const canvas = await html2canvas(element, {
+            scale: 2,
+            useCORS: true,
+        });
 
-        pdf.addImage(data, "PNG", 0, 0, pdfWidth, pdfHeight);
-        pdf.save(`${paymentDetails?.ticket_owner} Ticket`);
-    }
+        const imgData = canvas.toDataURL("image/png");
+
+        // Create a custom size PDF (same as ticket container)
+        const pdfWidth = 300; // pixels
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+        const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "px",
+            format: [pdfWidth, pdfHeight],
+        });
+
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`${paymentDetails?.ticket_owner_first_name}_Ticket.pdf`);
+    };
 
     const getPaymentDetails = React.useCallback(() => {
         if (transactionID !== "") {
@@ -373,7 +382,7 @@ export const FormDialog = ({
                                                 <Button
                                                     variant="contained"
                                                     sx={{ mr: 2, my: 2 }}
-                                                    onClick={printInvoice}
+                                                    onClick={downloadTicket}
                                                 >
                                                     Download
                                                 </Button>
@@ -431,11 +440,11 @@ export const FormDialog = ({
                                                     <Box sx={{ width: '100%' }}>
                                                         {[
                                                             { label: 'Mkoa-Dekania', value: `${paymentDetails?.region || 'Dar es Salaam'} - ${paymentDetails?.location || ''}` },
-                                                            { label: 'Jina Kamili', value: paymentDetails?.full_name },
+                                                            { label: 'Jina Kamili', value: `${paymentDetails?.ticket_owner_first_name} ${paymentDetails?.ticket_owner_last_name}` },
                                                             { label: 'T Shirt Size', value: paymentDetails?.t_shirt_size },
                                                             { label: 'Umbali wa kukimbia', value: paymentDetails?.distance },
                                                             { label: 'Namba Ya Simu', value: paymentDetails?.phone_number },
-                                                            { label: 'Tarehe', value: paymentDetails?.created_at },
+                                                            { label: 'Tarehe', value: dayjs(paymentDetails?.created_at).format("DD-MM-YYYY HH:mm:ss") },
                                                             { label: 'Kiasi', value: formatMoney(paymentDetails?.amount) },
                                                         ].map((item, index) => (
                                                             <Box

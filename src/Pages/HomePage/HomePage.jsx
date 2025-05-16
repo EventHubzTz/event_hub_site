@@ -100,6 +100,7 @@ function HomePage() {
                 sx: {
                     my: 1,
                     mr: 2,
+                    width: { xs: "100%" }
                 }
             },
             button2: {
@@ -108,7 +109,8 @@ function HomePage() {
                 color: "success",
                 sx: {
                     my: 1,
-                    mr: 2
+                    mr: 2,
+                    width: { xs: "100%" }
                 }
             },
             button3: {
@@ -130,6 +132,7 @@ function HomePage() {
                     color: "white",
                     border: "1px solid white",
                     borderRadius: 16,
+                    width: { xs: "100%" }
                 }
             },
             button2: {
@@ -142,6 +145,7 @@ function HomePage() {
                     color: "white",
                     border: "1px solid white",
                     borderRadius: 16,
+                    width: { xs: "100%" }
                 }
             },
             button3: {
@@ -153,6 +157,7 @@ function HomePage() {
                     color: "white",
                     border: "1px solid white",
                     borderRadius: 16,
+                    width: { xs: "100%" }
                 }
             }
         },
@@ -165,7 +170,8 @@ function HomePage() {
                 variant: "contained",
                 sx: {
                     my: 1,
-                    mr: 2
+                    mr: 2,
+                    width: { xs: "100%" }
                 }
             },
             button2: {
@@ -174,7 +180,8 @@ function HomePage() {
                 color: "success",
                 sx: {
                     my: 1,
-                    mr: 2
+                    mr: 2,
+                    width: { xs: "100%" }
                 }
             },
             button3: {
@@ -196,6 +203,7 @@ function HomePage() {
                     color: "white",
                     border: "1px solid white",
                     borderRadius: 16,
+                    width: { xs: "100%" }
                 }
             },
             button2: {
@@ -208,6 +216,7 @@ function HomePage() {
                     color: "white",
                     border: "1px solid white",
                     borderRadius: 16,
+                    width: { xs: "100%" }
                 }
             },
             button3: {
@@ -218,6 +227,7 @@ function HomePage() {
                     color: "white",
                     border: "1px solid white",
                     borderRadius: 16,
+                    width: { xs: "100%" }
                 }
             }
         }
